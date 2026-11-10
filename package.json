@@ -1,0 +1,9 @@
+{
+  "name": "grid-business-learning",
+  "version": "1.0.0",
+  "private": true,
+  "description": "面向软件研发人员的国家电网业务知识静态学习应用",
+  "scripts": {
+    "test": "node --test tests/*.test.cjs"
+  }
+}

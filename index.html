@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#075e54" />
+    <meta
+      name="description"
+      content="面向软件研发人员的国家电网业务知识学习系统，包含本地学习进度与每日章节解锁。"
+    />
+    <title>电网业务研习室</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#chapter-content">跳到正文</a>
+
+    <header class="mobile-header">
+      <button
+        class="icon-button"
+        id="menu-toggle"
+        type="button"
+        aria-label="打开课程目录"
+        aria-controls="course-sidebar"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+      <a class="mobile-brand" href="#top" aria-label="返回顶部">
+        <span class="brand-mark" aria-hidden="true">网</span>
+        <span>电网业务研习室</span>
+      </a>
+      <span class="mobile-progress" id="mobile-progress">0%</span>
+    </header>
+
+    <div class="app-shell" id="top">
+      <div class="sidebar-scrim" id="sidebar-scrim" hidden></div>
+
+      <aside class="sidebar" id="course-sidebar" aria-label="课程目录与学习进度">
+        <div class="brand-block">
+          <a class="brand" href="#top">
+            <span class="brand-mark" aria-hidden="true">网</span>
+            <span>
+              <strong>电网业务研习室</strong>
+              <small>为软件研发人员建立业务地图</small>
+            </span>
+          </a>
+          <button class="sidebar-close" id="sidebar-close" type="button" aria-label="关闭课程目录">
+            ×
+          </button>
+        </div>
+
+        <section class="progress-overview" aria-labelledby="progress-heading">
+          <div class="progress-orbit" id="progress-orbit">
+            <span id="progress-value">0%</span>
+          </div>
+          <div>
+            <p class="eyebrow" id="progress-heading">本地学习进度</p>
+            <strong class="progress-count" id="progress-count">0 / 3 章</strong>
+            <p class="progress-note" id="progress-note">首次学习从第01章开始</p>
+          </div>
+        </section>
+
+        <div class="sidebar-rule"></div>
+
+        <nav aria-label="课程章节">
+          <div class="nav-heading">
+            <span>学习路线</span>
+            <span class="nav-badge">基础阶段</span>
+          </div>
+          <ol class="course-list" id="course-list"></ol>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="local-only-card">
+            <span class="status-dot" aria-hidden="true"></span>
+            <div>
+              <strong>仅保存在当前浏览器</strong>
+              <p>更换设备或清理站点数据后，进度不会自动同步。</p>
+            </div>
+          </div>
+          <button class="text-button" id="reset-progress" type="button">重置本机学习进度</button>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <div class="reading-track" aria-hidden="true">
+          <span id="reading-track-fill"></span>
+        </div>
+
+        <div class="utility-bar">
+          <div class="breadcrumb">
+            <span>国家电网业务知识体系</span>
+            <span aria-hidden="true">/</span>
+            <strong id="breadcrumb-chapter">第01章</strong>
+          </div>
+          <div class="utility-meta">
+            <span id="today-label"></span>
+            <span class="utility-separator" aria-hidden="true"></span>
+            <span>阅读进度 <strong id="reading-percent">0%</strong></span>
+          </div>
+        </div>
+
+        <article class="chapter-shell" id="chapter-content" tabindex="-1"></article>
+
+        <footer class="page-footer">
+          <p>本应用用于业务学习，不替代企业正式制度、标准和现场作业要求。</p>
+          <p>学习记录以浏览器本地日期为准。</p>
+        </footer>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <dialog class="confirm-dialog" id="reset-dialog">
+      <form method="dialog">
+        <p class="eyebrow">重置学习记录</p>
+        <h2>确定清除本机进度吗？</h2>
+        <p>已完成的章节、测验答案和解锁日期都会从当前浏览器中删除，且无法恢复。</p>
+        <div class="dialog-actions">
+          <button class="button button-secondary" value="cancel">取消</button>
+          <button class="button button-danger" value="confirm">确认重置</button>
+        </div>
+      </form>
+    </dialog>
+
+    <noscript>
+      <div class="noscript-message">需要启用 JavaScript 才能记录学习进度并显示课程内容。</div>
+    </noscript>
+
+    <script src="./assets/progress.js" defer></script>
+    <script src="./assets/content.js" defer></script>
+    <script src="./assets/app.js" defer></script>
+  </body>
+</html>
