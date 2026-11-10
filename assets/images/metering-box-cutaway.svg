@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="720" viewBox="0 0 1100 720" role="img" aria-labelledby="title desc">
+  <title id="title">计量箱内部结构示意</title>
+  <desc id="desc">计量箱内常见进线、开关、母排、互感器、电能表、采集终端和封印等部件，用于教学识别。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#f7f5ef"/><stop offset="1" stop-color="#e1ebe5"/></linearGradient>
+    <filter id="s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#17302e" flood-opacity=".13"/></filter>
+    <style>
+      .h{font:700 30px "PingFang SC","Microsoft YaHei",sans-serif;fill:#17302e}
+      .s{font:400 14px "PingFang SC","Microsoft YaHei",sans-serif;fill:#526764}
+      .lbl{font:700 15px "PingFang SC","Microsoft YaHei",sans-serif;fill:#17302e}
+      .note{font:400 13px "PingFang SC","Microsoft YaHei",sans-serif;fill:#526764}
+      .wire{font:700 11px "SFMono-Regular","Microsoft YaHei",monospace;fill:#08735b}
+    </style>
+  </defs>
+  <rect width="1100" height="720" rx="30" fill="url(#bg)"/>
+  <text x="48" y="55" class="h">计量箱内部怎么看</text>
+  <text x="48" y="82" class="s">示意结构用于建立空间感，不同电压等级、计量方式和省公司现场设备可能不同。</text>
+
+  <g filter="url(#s)">
+    <rect x="240" y="118" width="620" height="482" rx="20" fill="#e9ece6" stroke="#6f8d82" stroke-width="8"/>
+    <rect x="270" y="148" width="560" height="425" rx="8" fill="#fffdf8" stroke="#c9d3cd" stroke-width="2"/>
+  </g>
+
+  <path d="M319 148v425M781 148v425" stroke="#d9dfda" stroke-width="3" stroke-dasharray="8 7"/>
+  <path d="M353 186h394" stroke="#c97823" stroke-width="7" stroke-linecap="round"/>
+  <path d="M353 186v66M747 186v66" stroke="#c97823" stroke-width="5"/>
+  <text x="503" y="174" class="wire">进线 / 母排区域</text>
+
+  <rect x="390" y="232" width="114" height="54" rx="8" fill="#2c4c46"/>
+  <rect x="458" y="241" width="28" height="14" rx="3" fill="#d0ee76"/>
+  <path d="M406 260h68M406 270h68" stroke="#829c94" stroke-width="3"/>
+  <circle cx="447" cy="260" r="14" fill="#fffdf8" stroke="#0a6653" stroke-width="4"/>
+  <text x="381" y="310" class="lbl">总开关 / 保护元件</text>
+
+  <path d="M424 286v48M470 286v48" stroke="#0a6653" stroke-width="5"/>
+  <path d="M424 334h46" stroke="#0a6653" stroke-width="5"/>
+  <path d="M354 246h36M354 270h36" stroke="#b88941" stroke-width="5"/>
+  <rect x="320" y="331" width="138" height="113" rx="13" fill="#e8f6f0" stroke="#1aa27d" stroke-width="2"/>
+  <path d="M338 365h98M338 386h98M338 407h98" stroke="#93bcb0" stroke-width="3"/>
+  <ellipse cx="365" cy="365" rx="40" ry="10" fill="none" stroke="#c97823" stroke-width="4"/>
+  <ellipse cx="402" cy="386" rx="40" ry="10" fill="none" stroke="#c97823" stroke-width="4"/>
+  <ellipse cx="376" cy="407" rx="40" ry="10" fill="none" stroke="#c97823" stroke-width="4"/>
+  <text x="310" y="470" class="lbl">电流互感器</text>
+  <text x="310" y="494" class="note">把大电流转换为表计信号</text>
+
+  <g>
+    <rect x="501" y="331" width="128" height="83" rx="11" fill="#0a6653"/>
+    <rect x="519" y="347" width="92" height="36" rx="5" fill="#dff2e8"/>
+    <text x="530" y="372" fill="#08735b" font-size="17" font-family="SFMono-Regular,monospace" font-weight="700">000.00</text>
+    <circle cx="546" cy="397" r="5" fill="#d0ee76"/><circle cx="565" cy="397" r="5" fill="#d0ee76"/><circle cx="584" cy="397" r="5" fill="#d0ee76"/>
+    <text x="501" y="440" class="lbl">电能表</text>
+  </g>
+  <g>
+    <rect x="652" y="331" width="121" height="93" rx="11" fill="#2d4b46"/>
+    <rect x="670" y="347" width="85" height="34" rx="5" fill="#dff2e8"/>
+    <path d="M680 361h65M680 370h45" stroke="#91a9a1" stroke-width="3"/>
+    <path d="M671 400h88" stroke="#d0ee76" stroke-width="4"/>
+    <text x="652" y="451" class="lbl">采集终端</text>
+  </g>
+
+  <path d="M540 286v28M690 286v28" stroke="#0a6653" stroke-width="5"/>
+  <path d="M540 314h150" stroke="#0a6653" stroke-width="5"/>
+  <path d="M586 314v17M720 314v17" stroke="#0a6653" stroke-width="5"/>
+
+  <g>
+    <rect x="300" y="507" width="148" height="38" rx="9" fill="#fff4df" stroke="#d9b477"/>
+    <path d="M320 526h108" stroke="#c97823" stroke-width="4"/>
+    <circle cx="334" cy="526" r="8" fill="#c97823"/><circle cx="374" cy="526" r="8" fill="#c97823"/><circle cx="414" cy="526" r="8" fill="#c97823"/>
+    <text x="299" y="571" class="lbl">封印 / 锁具</text>
+  </g>
+  <g>
+    <rect x="615" y="507" width="173" height="38" rx="9" fill="#eef0eb" stroke="#a8bab2"/>
+    <text x="633" y="531" class="note">接线端子与二次回路</text>
+    <text x="615" y="571" class="lbl">接线与二次回路</text>
+  </g>
+
+  <g transform="translate(48 170)">
+    <circle cx="10" cy="10" r="10" fill="#c97823"/><text x="28" y="15" class="note">进线先进入箱体</text>
+    <circle cx="10" cy="74" r="10" fill="#0a6653"/><text x="28" y="79" class="note">再经过开关与计量回路</text>
+    <circle cx="10" cy="138" r="10" fill="#1aa27d"/><text x="28" y="143" class="note">表计测量并记录电能</text>
+    <circle cx="10" cy="202" r="10" fill="#d0ee76"/><text x="28" y="207" class="note">终端上传采集数据</text>
+    <circle cx="10" cy="266" r="10" fill="#b84b3e"/><text x="28" y="271" class="note">封印形成安全责任证据</text>
+  </g>
+
+  <g transform="translate(878 178)">
+    <path d="M0 0h86v282h-86z" fill="#073f37" rx="16"/>
+    <text x="16" y="34" class="lbl" style="fill:#d0ee76">研发理解</text>
+    <text x="16" y="67" class="note" style="fill:#ffffff">箱内不是“一堆</text>
+    <text x="16" y="87" class="note" style="fill:#ffffff">编号”，而是从</text>
+    <text x="16" y="107" class="note" style="fill:#ffffff">进线、计量、</text>
+    <text x="16" y="127" class="note" style="fill:#ffffff">采集到封印</text>
+    <text x="16" y="147" class="note" style="fill:#ffffff">的一条现场</text>
+    <text x="16" y="167" class="note" style="fill:#ffffff">证据链。</text>
+    <text x="16" y="211" class="note" style="fill:#b8d4cc">先认对象，</text>
+    <text x="16" y="231" class="note" style="fill:#b8d4cc">再问它的</text>
+    <text x="16" y="251" class="note" style="fill:#b8d4cc">业务作用。</text>
+  </g>
+</svg>

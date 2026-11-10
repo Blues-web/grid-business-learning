@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620" role="img" aria-labelledby="title desc">
+  <title id="title">电能表铭牌参数示意</title>
+  <desc id="desc">用教学示意说明电能表铭牌上的型号、电压、电流、频率、准确度等信息如何帮助现场核对。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7f5ef"/><stop offset="1" stop-color="#ddebe5"/></linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="13" flood-color="#17302e" flood-opacity=".14"/></filter>
+    <style>
+      .h{font:700 30px "PingFang SC","Microsoft YaHei",sans-serif;fill:#17302e}
+      .s{font:400 14px "PingFang SC","Microsoft YaHei",sans-serif;fill:#526764}
+      .plate{font:700 18px "PingFang SC","Microsoft YaHei",sans-serif;fill:#162c29}
+      .mono{font:700 17px "SFMono-Regular","Microsoft YaHei",monospace;fill:#0a5b4a}
+      .note{font:700 14px "PingFang SC","Microsoft YaHei",sans-serif;fill:#17302e}
+    </style>
+  </defs>
+  <rect width="1000" height="620" rx="30" fill="url(#bg)"/>
+  <text x="46" y="55" class="h">看懂电能表铭牌</text>
+  <text x="46" y="82" class="s">铭牌用于现场核对设备能力、接线条件和计量用途。下面是教学示意，不是实际设备参数。</text>
+
+  <g filter="url(#sh)">
+    <rect x="72" y="132" width="530" height="390" rx="25" fill="#f5f3e8" stroke="#c7cdc5" stroke-width="4"/>
+    <rect x="110" y="170" width="454" height="55" rx="8" fill="#17302e"/>
+    <text x="141" y="204" fill="#d0ee76" font-size="20" font-family="PingFang SC,Microsoft YaHei,sans-serif" font-weight="700">单相智能电能表 · 教学示意铭牌</text>
+    <path d="M116 251h442M116 365h442M326 251v306" stroke="#9eaca5" stroke-width="2"/>
+    <text x="136" y="285" class="plate">型号</text><text x="221" y="285" class="mono">DEMO-DDZY</text>
+    <text x="346" y="285" class="plate">电压</text><text x="418" y="285" class="mono">220 V</text>
+    <text x="136" y="327" class="plate">电流</text><text x="221" y="327" class="mono">5(60) A</text>
+    <text x="346" y="327" class="plate">频率</text><text x="418" y="327" class="mono">50 Hz</text>
+    <text x="136" y="401" class="plate">准确度</text><text x="237" y="401" class="mono">2 级</text>
+    <text x="346" y="401" class="plate">脉冲常数</text><text x="442" y="401" class="mono">1200</text>
+    <text x="136" y="444" class="plate">资产编号</text><text x="238" y="444" class="mono">M-00000001</text>
+    <text x="136" y="489" class="plate">制造单位</text><text x="238" y="489" class="mono">设备制造示例单位</text>
+    <text x="136" y="531" class="note">二维码与封印位置因现场设备而异，核对时应以实物和现场制度为准。</text>
+  </g>
+
+  <g>
+    <path d="M602 194h76" stroke="#1aa27d" stroke-width="3"/><text x="696" y="188" class="note">电压规格</text><text x="696" y="211" class="s">判断适用的供电方式</text>
+    <path d="M602 275h76" stroke="#1aa27d" stroke-width="3"/><text x="696" y="269" class="note">基本 / 最大电流</text><text x="696" y="292" class="s">不是当前实际电流</text>
+    <path d="M602 355h76" stroke="#1aa27d" stroke-width="3"/><text x="696" y="349" class="note">表号和制造信息</text><text x="696" y="372" class="s">用于现场核对与追溯</text>
+    <path d="M602 436h76" stroke="#1aa27d" stroke-width="3"/><text x="696" y="430" class="note">准确度与常数</text><text x="696" y="453" class="s">帮助理解计量能力和读数规则</text>
+  </g>
+</svg>

@@ -5,7 +5,7 @@
     meta: {
       title: "国家电网业务知识体系",
       stage: "基础阶段",
-      version: "v1.0",
+      version: "v1.1",
       updatedAt: "2026-11-10",
     },
     chapters: [
@@ -13,14 +13,14 @@
         id: "1",
         number: "01",
         title: "从发电到用电",
-        subtitle: "先建立一张能贯穿营销、计量、采集、运检和现场作业的业务地图",
-        duration: "约 12 分钟",
-        tags: ["电力系统", "业务对象", "数据关系"],
+        subtitle: "先看懂电能怎样到客户，再理解营销、计量、采集、运检和现场作业各自解决什么问题",
+        duration: "约 15 分钟",
+        tags: ["电力系统", "营销运检", "现场业务"],
         objectives: [
-          "说明发电、输电、变电、配电和用电之间的关系。",
-          "区分物理电网、业务关系与信息系统记录。",
-          "把计量箱、台区、电能表和客户放到同一张关系图中。",
-          "理解为什么页面字段正确，不一定代表现场关系和档案一致。",
+          "用自己的话说明电力从生产到客户使用的主要过程。",
+          "说清营销服务、计量采集、设备运检和现场作业的业务分工。",
+          "理解计量箱、台区、电能表和客户在现实电网中的位置。",
+          "知道项目任务为什么会跨部门、跨系统协作，以及异常会影响什么。",
         ],
         sections: [
           {
@@ -30,13 +30,13 @@
             html: `
               <div class="objective-grid">
                 <div class="objective-card"><span>01</span><p>能读懂“发—输—变—配—用”这条电力主线。</p></div>
-                <div class="objective-card"><span>02</span><p>能区分设备资产、物理拓扑和客户业务关系。</p></div>
-                <div class="objective-card"><span>03</span><p>能解释为什么现场和系统档案会出现不一致。</p></div>
-                <div class="objective-card"><span>04</span><p>能把熟悉的项目页面放回完整业务脉络中。</p></div>
+                <div class="objective-card"><span>02</span><p>知道营销、运检、计量和采集分别负责什么。</p></div>
+                <div class="objective-card"><span>03</span><p>能从现场设备联想到客户服务与后续业务。</p></div>
+                <div class="objective-card"><span>04</span><p>能把计量箱、巡视和缺陷项目放回完整业务脉络中。</p></div>
               </div>
               <div class="callout callout-green">
                 <strong>为什么先学这一章？</strong>
-                <p>开发国网业务系统时，页面上的“台区”“计量箱”“电能表”不是普通字段，而是现实世界中的设备、位置、责任和业务关系的组合。先知道它们在物理世界中的位置，后面才能理解接口为什么这样设计、历史为什么不能覆盖。</p>
+                <p>研发如果只记住页面名称，很容易把业务理解成“填表、提交、审核”。真正熟悉业务，需要知道这项工作在现场解决什么问题、谁会使用结果、出错后会影响谁。</p>
               </div>
             `,
           },
@@ -45,12 +45,12 @@
             short: "背景",
             title: "2. 业务背景",
             html: `
-              <p>假设一个计量箱建档页面同时显示：台区名称、配变名称、计量箱编号、电能表编号、用电地址和客户名称。字段都能保存，业务结果却不一定可靠。</p>
+              <p>假设一个计量箱建档页面同时显示：台区名称、配变名称、计量箱编号、电能表编号、用电地址和客户名称。页面能够提交，业务结果却不一定可靠。</p>
               <div class="split-panel">
                 <div class="panel panel-paper">
                   <p class="panel-label">研发看到的</p>
                   <h3>一条能提交的数据</h3>
-                  <p>表单校验通过，接口返回成功，页面提示“建档完成”。</p>
+                  <p>表单校验通过，系统提示成功，页面显示“建档完成”。</p>
                 </div>
                 <div class="panel panel-mint">
                   <p class="panel-label">现场关心的</p>
@@ -58,7 +58,7 @@
                   <p>箱子由哪台配变供电、箱内装了几只表、表对应哪个客户、换表后旧数据如何衔接。</p>
                 </div>
               </div>
-              <p>信息系统表面上管理字段，业务上管理的是<strong>现实设备、设备关系以及围绕设备发生的活动</strong>。</p>
+              <p>系统表面上管理一条条信息，业务上管理的是<strong>现实设备、客户关系、现场活动和责任结果</strong>。理解这四层，才能听懂业务人员为什么要求某些信息必须现场确认。</p>
             `,
           },
           {
@@ -86,13 +86,33 @@
                 <article>
                   <h3>台区</h3>
                   <p><strong>通俗理解：</strong>一台配变及其低压供电范围内的线路、计量设施和用户组成的业务管理单元。</p>
-                  <p>“台区”的具体边界、编码和管理口径存在标准与省公司实现差异。系统设计时应避免只用一个<code>台区编号</code>字段替代配变、拓扑、责任范围和用户归属。</p>
+                  <p>“台区”的具体边界、编码和管理口径存在标准与省公司实现差异。业务上通常同时关心：谁供电、包含哪些低压设施、范围内有哪些用户、由谁负责管理。</p>
+                </article>
+                <article>
+                  <h3>营销服务</h3>
+                  <p>营销业务面对客户，关注客户申请接电、用电变更、抄表计费、用电检查和客户服务。研发看到的工单，往往只是客户服务过程的一部分。</p>
+                </article>
+                <article>
+                  <h3>设备运检</h3>
+                  <p>设备运检面对电网设施，关注设备是否存在、运行是否正常、谁负责巡视、发现缺陷后如何检修和验收。</p>
+                </article>
+                <article>
+                  <h3>计量与采集</h3>
+                  <p>计量解决“在哪里计量、怎么保证量得准”；采集解决“现场数据怎样及时传回系统”。二者共同为电量、电费、线损和设备状态判断提供依据。</p>
+                </article>
+                <article>
+                  <h3>调度与运行</h3>
+                  <p>调度关注电网整体的供需平衡、运行方式和故障处置；现场人员则负责执行设备巡视、操作、检修和应急处置。研发通常看不到调度过程，但它影响停电、复电和设备运行状态。</p>
                 </article>
               </div>
+              <figure class="lesson-figure">
+                <img src="./assets/images/power-business-map.svg" alt="从发电、输电、变电、配电到用电的一度电业务旅程，以及客户服务、计量采集和设备运检的支撑关系" />
+                <figcaption>图 1-1　一度电不只是物理流动，还会经过客户服务、计量采集和设备运检等业务协同。</figcaption>
+              </figure>
               <div class="term-compare">
-                <div><strong>设备资产</strong><span>现实世界里存在什么</span></div>
-                <div><strong>物理拓扑</strong><span>设备和设备怎样连接</span></div>
-                <div><strong>业务关系</strong><span>谁使用、谁负责、谁计量</span></div>
+                <div><strong>现场有什么</strong><span>设备、箱体、表计和接线</span></div>
+                <div><strong>现场怎样连接</strong><span>由哪条线路、哪台配变供电</span></div>
+                <div><strong>业务上意味着什么</strong><span>谁使用、谁计量、谁负责</span></div>
               </div>
             `,
           },
@@ -102,19 +122,10 @@
             title: "4. 业务对象及关系",
             html: `
               <p>下面是一条常见的低压居民供电路径，用于建立空间感。它不是所有用户都采用的唯一结构。</p>
-              <div class="topology-strip" role="img" aria-label="从电源到客户的供电关系示意">
-                <div><span>电源</span><strong>电厂 / 分布式电源</strong></div>
-                <i aria-hidden="true">→</i>
-                <div><span>网络</span><strong>输电与变电站</strong></div>
-                <i aria-hidden="true">→</i>
-                <div><span>分配</span><strong>配电线路与配变</strong></div>
-                <i aria-hidden="true">→</i>
-                <div><span>接入</span><strong>低压线路 / 计量箱</strong></div>
-                <i aria-hidden="true">→</i>
-                <div><span>计量</span><strong>电能表 / 采集终端</strong></div>
-                <i aria-hidden="true">→</i>
-                <div><span>业务</span><strong>供电点 / 客户</strong></div>
-              </div>
+              <figure class="lesson-figure">
+                <img src="./assets/images/distribution-topology.svg" alt="变电站通过中压线路连接配电变压器，形成多个低压台区，再经低压线路和计量箱供到客户" />
+                <figcaption>图 1-2　配电网把上级电能逐级分配到台区，再通过低压线路、计量箱和计量装置送到客户。</figcaption>
+              </figure>
               <div class="relation-grid">
                 <div class="relation-card">
                   <span>箱组</span>
@@ -140,6 +151,12 @@
               <div class="callout callout-amber">
                 <strong>关系不是永久写死的一对一。</strong>
                 <p>台区可包含多个客户；一个客户可有多个供电点；一个计量箱可装多只电能表；一只电能表在生命周期内也可能先后关联不同计量点。</p>
+              </div>
+              <div class="business-role-grid">
+                <div><span>调度 / 运行</span><strong>电能不能安全平衡地送出去</strong><p>关注运行方式、停电范围和故障处置。</p></div>
+                <div><span>营销</span><strong>客户怎样获得和使用供电服务</strong><p>关注申请、计费、用电变更和服务结果。</p></div>
+                <div><span>运检</span><strong>设备能否持续健康运行</strong><p>关注设备主人、巡视、检修和缺陷。</p></div>
+                <div><span>计量采集</span><strong>用电量能否准确记录并传回</strong><p>关注表计、接线、倍率、通信和数据质量。</p></div>
               </div>
             `,
           },
@@ -168,10 +185,16 @@
                 <li><b>客户提出申请</b><span>营业人员受理客户和用电地址，形成业务入口。</span></li>
                 <li><b>现场勘察</b><span>确认电源、供电方案、安装位置和计量方式。</span></li>
                 <li><b>建设与装表</b><span>现场形成配变、线路、计量箱、电能表和客户之间的真实连接。</span></li>
-                <li><b>档案建立</b><span>把客户、供电点、计量点、台区、设备和安装关系写入系统。</span></li>
+                <li><b>业务建档</b><span>明确客户在哪里用电、在哪里计量、由哪个台区供电，以及现场有哪些设备。</span></li>
                 <li><b>采集接入</b><span>电能表、终端、通信和主站形成数据链路。</span></li>
                 <li><b>持续运营</b><span>形成电量、电费、巡视、缺陷整改、换表和销户等后续业务。</span></li>
               </ol>
+              <div class="outcome-row">
+                <div><strong>客户结果</strong><span>能够正常、安全用电</span></div>
+                <div><strong>计量结果</strong><span>用电量可以准确记录</span></div>
+                <div><strong>管理结果</strong><span>设备归属和责任范围清楚</span></div>
+                <div><strong>服务结果</strong><span>后续变更、故障和缴费可办理</span></div>
+              </div>
               <div class="exception-box">
                 <strong>常见异常</strong>
                 <ul>
@@ -189,73 +212,93 @@
             title: "6. 本地项目案例",
             html: `
               <div class="case-header">
-                <div><span>案例来源</span><strong>计量箱建档 + 设备主人巡视</strong></div>
+                <div><span>案例来源</span><strong>计量箱建档 + 设备主人巡视 + 缺陷整改</strong></div>
                 <div class="case-badge">本地项目观察</div>
               </div>
-              <p>现场人员扫描一个计量箱后，建档或巡视应用需要同时处理以下信息：</p>
-              <div class="data-chip-group">
-                <span>箱组</span><span>计量箱资产编号</span><span>安装地址</span><span>所属台区</span>
-                <span>表位行列</span><span>电能表</span><span>通信地址</span><span>互感器变比</span>
-                <span>采集终端</span><span>封印</span><span>现场照片</span>
+              <p>三个项目看似做的是不同页面，实际上都在回答同一组现场问题：对象是谁、位置在哪、关系是否正确、现场状态如何、下一步由谁处理。</p>
+              <div class="project-scene-list">
+                <article>
+                  <span>01 · 建档</span>
+                  <h3>“把现场设备说清楚”</h3>
+                  <p>计量箱在哪里、属于哪个台区、箱内有哪些表、表对应哪个客户、现场设备是否与已有资料一致。</p>
+                  <strong>业务结果：新设备具备后续计量、营销和运检基础。</strong>
+                </article>
+                <article>
+                  <span>02 · 巡视</span>
+                  <h3>“确认现场仍然正确”</h3>
+                  <p>设备主人到现场核对箱体、表计、互感器、终端、封印和环境，确认档案是否与现场一致。</p>
+                  <strong>业务结果：正常则留下巡视证据，异常则转入后续处理。</strong>
+                </article>
+                <article>
+                  <span>03 · 整改</span>
+                  <h3>“让问题形成闭环”</h3>
+                  <p>缺陷被派工后，现场人员整改或退回，补照片、说明、材料记录，验收后再归档。</p>
+                  <strong>业务结果：问题从发现到验收都有责任和证据。</strong>
+                </article>
               </div>
-              <h3>业务问题不是“多填几个字段”</h3>
-              <p>箱表关系决定某只表安装在哪个箱、哪个表位；台区关系影响供电归属和线损分析；互感器变比影响计量倍率；封印记录影响现场安全责任；现场照片和定位构成作业证据。</p>
-              <div class="project-pair">
-                <div><span>计量箱建档</span><p>解决“现场资产如何准确进入档案，以及箱、表位、表和设备如何关联”。</p></div>
-                <div><span>设备主人巡视</span><p>解决“设备主人如何按照台区和设备清单核对现场、发现异常并形成后续任务”。</p></div>
+            `,
+          },
+          {
+            id: "field-business",
+            short: "业务词卡",
+            title: "7. 研发常听到的基础业务词",
+            html: `
+              <p>这些词经常出现在需求讨论中，研发不需要成为电力专业人员，但要知道它们对应的现场现象和业务影响。</p>
+              <div class="basic-business-cards">
+                <article><span>供电可靠性</span><strong>客户能不能持续有电</strong><p>停电时长、次数和影响范围，是可靠性、服务质量和运维工作的共同关注点。</p></article>
+                <article><span>供电半径</span><strong>电能从电源送到用户的距离</strong><p>半径过长可能带来线路损耗、末端电压偏低和运维困难，策划接入方案时要综合考虑。</p></article>
+                <article><span>电压质量</span><strong>电压是否保持在合理范围</strong><p>偏高、偏低或某相异常都可能影响设备正常使用，需要区分电源、线路、接线和计量问题。</p></article>
+                <article><span>停电与复电</span><strong>为什么没电、何时恢复</strong><p>计划检修、临时故障、限电或客户内部故障的处理路径不同，不能只用一个“停电”状态概括。</p></article>
+                <article><span>报装容量</span><strong>客户计划申请多大用电能力</strong><p>报装容量影响供电方案、设备选型和后续客户服务，但不等同于当前实际负荷。</p></article>
+                <article><span>产权分界点</span><strong>双方设备在哪里交接责任</strong><p>分界点关系到哪些设备由供电企业负责、哪些由客户负责，是现场判断责任的重要依据。</p></article>
+              </div>
+              <div class="callout callout-green">
+                <strong>研发判断提示</strong>
+                <p>业务人员说“没电”时，不要马上把它理解成一个技术故障。它可能是计划停电、故障停电、客户内部故障、欠费停电、表计失压或采集异常。先问清对象、范围和持续时间。</p>
               </div>
             `,
           },
           {
             id: "software",
-            short: "软件视角",
-            title: "7. 软件研发视角",
+            short: "业务理解",
+            title: "8. 研发如何真正听懂业务",
             html: `
-              <p>建议把对象关系拆为四类，而不是全部塞进一张“客户设备表”：</p>
-              <div class="model-table">
-                <div class="model-row model-head"><span>数据维度</span><span>回答的问题</span><span>典型对象</span></div>
-                <div class="model-row"><span>资产</span><span>有什么设备，属于谁</span><span>配变、计量箱、电能表</span></div>
-                <div class="model-row"><span>拓扑</span><span>设备之间如何连接</span><span>线路节点、接入点、挂接关系</span></div>
-                <div class="model-row"><span>业务</span><span>谁使用、谁计量、谁负责</span><span>客户、供电点、计量点、设备主人</span></div>
-                <div class="model-row"><span>活动</span><span>发生了什么，结果是什么</span><span>工单、巡视、缺陷、换表、档案变更</span></div>
+              <p>研发不需要先背数据库或接口，而要先学会把业务人员的一句话还原成现场场景。可以使用下面“五问法”：</p>
+              <div class="business-question-grid">
+                <article><span>01</span><h3>对象是谁？</h3><p>他说的是客户、供电点、计量箱、电能表、互感器，还是某张工单？</p></article>
+                <article><span>02</span><h3>现场在哪里？</h3><p>设备位于哪个台区、楼栋或线路下，人员现在是否真的到了现场？</p></article>
+                <article><span>03</span><h3>关系对不对？</h3><p>这台配变是否真的给这个台区供电，这只表是否真的属于这个客户和表位？</p></article>
+                <article><span>04</span><h3>业务到哪一步？</h3><p>是在建档、巡视、发现缺陷、整改、验收，还是已经归档？</p></article>
+                <article><span>05</span><h3>出错影响谁？</h3><p>会影响客户用电、电量计费、设备责任、线损分析，还是后续现场作业？</p></article>
               </div>
-              <div class="code-card">
-                <div class="code-title">示意模型，不是国网正式数据库结构</div>
-                <pre><code>grid_asset             设备身份、状态、产权、位置
-topology_relation      from_node、to_node、生效和失效时间
-customer               客户身份与联系信息
-service_point          供电点、地址和有效状态
-metering_point         计量位置与用途
-meter_installation     电能表在某计量点上的安装时段
-work_order             业务活动、处理人、结果和证据</code></pre>
+              <div class="business-example">
+                <p class="panel-label">用五问法拆一句话</p>
+                <blockquote>“这个箱子建档了，但表没采集到，今天巡视先把它整改掉。”</blockquote>
+                <div>
+                  <p><strong>对象：</strong>计量箱、电能表、采集终端。</p>
+                  <p><strong>关系：</strong>箱—表—台区—客户是否一致。</p>
+                  <p><strong>状态：</strong>已建档不代表已正确接入采集，也不代表缺陷已经整改完成。</p>
+                  <p><strong>影响：</strong>采集不到会影响数据回传，后续可能影响电量和现场核查。</p>
+                  <p><strong>责任人：</strong>需要判断是建档人员、设备主人、采集运维还是整改人员处理。</p>
+                </div>
               </div>
-              <div class="split-panel">
-                <div class="panel">
-                  <p class="panel-label">接口</p>
-                  <p>同时传业务 ID、所属组织、生效时间、来源系统、版本和变更原因，不能只传名称。</p>
-                </div>
-                <div class="panel">
-                  <p class="panel-label">历史</p>
-                  <p>换表、迁址、关系调整和档案修正使用失效—新建关系，避免覆盖原记录。</p>
-                </div>
-                <div class="panel">
-                  <p class="panel-label">异常</p>
-                  <p>先识别数据源和现场事实，再决定修正责任；不要让前端通过自由编辑掩盖跨系统冲突。</p>
-                </div>
+              <div class="callout callout-green">
+                <strong>业务理解的目标不是会复述术语。</strong>
+                <p>而是能够向业务人员解释：这个对象在现场起什么作用、当前流程为什么需要这一步、如果结果错误会影响谁、下一步应该找谁处理。</p>
               </div>
             `,
           },
           {
             id: "summary",
             short: "总结",
-            title: "8. 本节总结",
+            title: "9. 本节总结",
             html: `
               <div class="takeaway-list">
-                <div><span>1</span><p>软件字段是对现实设备、关系和活动的抽象。</p></div>
-                <div><span>2</span><p>电力流、信息流和业务流相关，但不能互相替代。</p></div>
+                <div><span>1</span><p>电力业务建立在真实电网上，页面只是现场业务的入口。</p></div>
+                <div><span>2</span><p>营销服务、设备运检、计量采集和调度运行关注不同业务结果。</p></div>
                 <div><span>3</span><p>配变是设备，台区是围绕供电范围形成的管理对象。</p></div>
-                <div><span>4</span><p>资产、拓扑、客户关系和计量关系必须分开建模。</p></div>
-                <div><span>5</span><p>换表、迁移和修正要保留有效时间及变更证据。</p></div>
+                <div><span>4</span><p>计量箱建档、巡视和缺陷整改共同维护现场关系与证据。</p></div>
+                <div><span>5</span><p>理解业务要能回答对象、位置、关系、步骤和影响五个问题。</p></div>
               </div>
             `,
           },
@@ -283,11 +326,11 @@ work_order             业务活动、处理人、结果和证据</code></pre>
           },
           {
             id: "q1-2",
-            question: "关于台区，哪种理解最适合软件业务建模？",
+            question: "关于台区，哪种理解最符合现场业务？",
             options: [
               "台区就是一台配电变压器",
               "台区就是供电所这个组织",
-              "台区是围绕配变及低压供电范围形成的管理对象，具体边界需结合业务口径",
+              "台区是围绕配变及低压供电范围形成的管理和服务对象，具体边界需结合业务口径",
               "台区就是客户所在的行政区",
             ],
             correct: 2,
@@ -296,7 +339,7 @@ work_order             业务活动、处理人、结果和证据</code></pre>
             optionNotes: [
               "配变只是台区的核心设备之一。",
               "组织机构与供电管理对象不是同一维度。",
-              "正确答案：同时保留设备、范围、用户和管理关系。",
+              "正确答案：台区同时包含供电设施、范围、用户和管理关系。",
               "供电范围可以跨越行政边界，不能简单等同。",
             ],
           },
@@ -305,16 +348,16 @@ work_order             业务活动、处理人、结果和证据</code></pre>
             question:
               "现场发现计量箱实际由A号配变供电，但系统档案挂在B号台区。较合理的处理方式是什么？",
             options: [
-              "直接把台区字段改成A，不需要核实其他关系",
+              "直接把系统里的台区改成A，不需要核实其他关系",
               "只修改客户归属，不处理计量箱和拓扑",
               "删除原计量箱记录，重新建立一个没有历史的箱",
-              "核对现场接线、档案来源和影响范围，保留证据及有效时间后修正",
+              "核对现场接线、档案来源和影响范围，先取证再由责任人员修正",
             ],
             correct: 3,
             explanation:
-              "应先确认事实来源和影响范围，再修正关系并保留现场证据、变更原因及历史有效期。",
+              "应先确认事实来源和影响范围，由现场与业务责任人员共同确认后再修正，并保留现场证据与处理记录。",
             optionNotes: [
-              "直接改字段可能掩盖线路、接入点或用户关系问题。",
+              "直接改记录可能掩盖线路、接入点或用户关系问题。",
               "计量箱、客户和拓扑是不同关系，不能只改一层。",
               "删除重建会丢失历史，也无法解释既有业务。",
               "正确答案：先核实、再修正、全程留痕。",
@@ -331,14 +374,14 @@ work_order             业务活动、处理人、结果和证据</code></pre>
         id: "2",
         number: "02",
         title: "看懂现场电学量",
-        subtitle: "电压、电流、功率、容量、负荷和互感器变比，分别回答什么业务问题",
-        duration: "约 14 分钟",
-        tags: ["电压电流", "容量负荷", "互感器"],
+        subtitle: "从铭牌、负荷、相别和计量倍率理解现场人员在核对什么",
+        duration: "约 16 分钟",
+        tags: ["设备铭牌", "容量负荷", "互感器"],
         objectives: [
-          "区分电压、电流、功率、电量和容量的物理含义。",
-          "解释视在功率、有功功率、功率因数和计量倍率。",
-          "理解配变容量、开关额定电流与实际负荷不是同一个概念。",
-          "识别现场读数与系统数据异常时应该先核对什么。",
+          "区分电压、电流、功率、电量和容量的业务含义。",
+          "看懂电能表铭牌和互感器变比在计量中的作用。",
+          "理解配变容量、合同容量、额定电流和实时负荷不是同一件事。",
+          "遇到电量、采集或设备异常时，知道应先核对哪些现场事实。",
         ],
         sections: [
           {
@@ -355,7 +398,7 @@ work_order             业务活动、处理人、结果和证据</code></pre>
               </div>
               <div class="callout callout-green">
                 <strong>学习目的</strong>
-                <p>业务人员说“容量不够”“电流偏大”“变比不对”“功率因数低”，都是在描述不同的现场约束。研发需要知道它们各自影响什么数据、校验和业务判断。</p>
+                <p>业务人员说“容量不够”“电流偏大”“变比不对”“功率因数低”，描述的是不同现场约束。研发需要知道这些现象会影响谁、需要找谁核实，以及可能引出什么后续业务。</p>
               </div>
             `,
           },
@@ -405,6 +448,15 @@ work_order             业务活动、处理人、结果和证据</code></pre>
                   <h3>容量与负荷</h3>
                   <p><strong>容量</strong>像设备的“承载上限和配置能力”；<strong>负荷</strong>像当前实际承担的用电规模。配变额定容量、报装容量、合同容量和实时负荷也可能采用不同业务口径。</p>
                 </article>
+                <article>
+                  <h3>相别与接线</h3>
+                  <p>居民和小容量用户常见单相供电，工业与较大容量用户常见三相供电。单相、三相以及三相四线等接线方式会影响设备选型、计量方式和现场异常判断。</p>
+                  <p><strong>业务提醒：</strong>看到某一相电压异常，不能直接判断为客户停电，也可能是某相缺压、接线异常、表计问题或采集问题。</p>
+                </article>
+                <article>
+                  <h3>额定值、实时值与结算值</h3>
+                  <p>设备铭牌上的电压、电流和容量是额定能力；采集页面的电压、电流和功率是某一时刻的测量值；电量是一段时间的累计结果。三者不能混着解释。</p>
+                </article>
               </div>
             `,
           },
@@ -430,10 +482,20 @@ work_order             业务活动、处理人、结果和证据</code></pre>
                   <p>1 kWh 表示 1 kW 持续 1 小时。电能表累计的是电能。</p>
                 </div>
               </div>
-              <p>公式不是为了让研发替代现场计算，而是帮助我们判断字段之间是否可能矛盾。例如一个 7 kW、220 V、功率因数接近 1 的充电设备，工作电流约 32 A；如果页面却显示 6 A，就值得核对。</p>
+              <p>公式不是为了让研发替代现场计算，而是帮助我们判断现场信息是否可能矛盾。例如一个 7 kW、220 V、功率因数接近 1 的充电设备，工作电流约 32 A；如果页面却显示 6 A，就值得核对。</p>
               <div class="callout callout-amber">
                 <strong>不要直接根据功率倒推唯一电流。</strong>
                 <p>交流场景还要考虑功率因数、三相线电压/相电压和负荷不平衡；需要依据实际测量与现场接线判断。</p>
+              </div>
+              <figure class="lesson-figure">
+                <img src="./assets/images/meter-nameplate.svg" alt="电能表教学示意铭牌，标注型号、电压、电流、频率、准确度、脉冲常数和资产编号" />
+                <figcaption>图 2-1　现场不能只看“表号”，铭牌参数决定设备适用范围，也帮助业务人员核对接线和计量条件。</figcaption>
+              </figure>
+              <div class="field-reading-list">
+                <div><b>先看电压</b><span>判断适用单相还是三相等供电条件。</span></div>
+                <div><b>再看电流</b><span>5(60)A 表示基本与最大电流能力，不是当前负荷。</span></div>
+                <div><b>核对表号</b><span>确认眼前这只表是不是业务要找的表。</span></div>
+                <div><b>再看接线与封印</b><span>判断计量装置是否保持原状、是否需要现场核查。</span></div>
               </div>
             `,
           },
@@ -449,6 +511,10 @@ work_order             业务活动、处理人、结果和证据</code></pre>
                 <div><span>二次侧</span><strong>电能表可接受的小信号</strong></div>
               </div>
               <p>以 100/5 A 的电流互感器为例，变比是 20。一次侧通过 100 A 时，二次侧对应约 5 A；电能表看到的是缩小后的信号，业务计算时需要按正确倍率还原。</p>
+              <figure class="lesson-figure">
+                <img src="./assets/images/metering-box-cutaway.svg" alt="计量箱内部示意，包括进线、总开关、电流互感器、电能表、采集终端、接线与封印" />
+                <figcaption>图 2-2　计量箱内部是同一条计量证据链：进线、开关、互感器、表计、采集和封印共同决定数据是否可信。</figcaption>
+              </figure>
               <div class="exception-box">
                 <strong>变比错误的典型影响</strong>
                 <ul>
@@ -488,46 +554,41 @@ work_order             业务活动、处理人、结果和证据</code></pre>
                 <div><span>案例来源</span><strong>设备主人巡视中的计量装置核对</strong></div>
                 <div class="case-badge">本地项目观察</div>
               </div>
-              <p>巡视页面会分别采集计量箱、电能表、互感器、采集终端和开关信息。以互感器为例，现场关注类别、位置、变比和照片；以电能表为例，现场关注资产编号、通信地址、接线方式、封印和照片。</p>
+              <p>巡视页面会分别核对计量箱、电能表、互感器、采集终端和开关。以互感器为例，现场关注它是哪一类、装在哪里、变比是多少；以电能表为例，现场关注表号、接线、封印和运行状态。</p>
               <div class="scenario-card">
                 <p class="panel-label">场景</p>
                 <h3>一条“线损异常”线索</h3>
                 <p>某台区可能出现用户用电正常、采集也正常，但台区线损模式异常的现象。排查时不能只盯总表与分表差额，还要核对用户表所属台区、计量倍率、接线方式、换表记录、互感器档案和采集数据质量。</p>
               </div>
+              <h3>项目里的典型判断</h3>
+              <div class="business-cause-grid">
+                <div><span>电量突然变小</span><strong>先排除负荷变化</strong><p>再看换表、倍率、接线、采集完整性和现场用电情况。</p></div>
+                <div><span>某相电压为 0</span><strong>先确认停的是哪一相</strong><p>可能是外部停电、缺相、表计接线或采集问题，不能只凭一个读数下结论。</p></div>
+                <div><span>电流超过开关额定值</span><strong>判断是否长期超载</strong><p>瞬时启动电流、实际负荷和设备能力要分开理解。</p></div>
+                <div><span>采集在线但电量异常</span><strong>不要等同计量正确</strong><p>在线说明通信链路部分正常，仍需核对接线、倍率、表计状态和时间口径。</p></div>
+              </div>
               <div class="project-pair">
-                <div><span>巡视应用的作用</span><p>把现场可观测的电压、电流、表号、变比、封印和设备状态形成结构化记录。</p></div>
-                <div><span>营销/采集系统的作用</span><p>利用档案与测量数据计算电量、线损和业务结果，并对异常发起核查或整改。</p></div>
+                <div><span>巡视应用的作用</span><p>让设备主人到现场核对、取证和发现问题，并把异常交给后续业务处理。</p></div>
+                <div><span>营销/采集业务的作用</span><p>用现场资料和测量结果形成电量、费用、线损或异常处理结论。</p></div>
               </div>
             `,
           },
           {
             id: "software",
-            short: "软件视角",
-            title: "8. 软件研发视角",
+            short: "现场判断",
+            title: "8. 研发怎样解读现场异常",
             html: `
-              <div class="guideline-grid">
-                <div><span>字段</span><h3>带单位和口径</h3><p>电压V、电流A、有功kW、电量kWh、容量kVA不能只存数值。额定值、瞬时值、累计值也要分开。</p></div>
-                <div><span>校验</span><h3>做区间与关系校验</h3><p>校验单位、量程、倍率、三相组合和状态，不只校验“必填”。</p></div>
-                <div><span>展示</span><h3>解释异常而不是只标红</h3><p>提示异常对象、可能原因、数据时间与建议核对步骤。</p></div>
-                <div><span>历史</span><h3>保存计量参数版本</h3><p>换表、改接线、变比维护必须保留生效时间，否则历史电量无法解释。</p></div>
-              </div>
-              <div class="code-card">
-                <div class="code-title">接口设计示意</div>
-                <pre><code>{
-  "meteringPointId": "MP-001",
-  "meterAssetId": "M-001",
-  "wiringMode": "THREE_PHASE_FOUR_WIRE",
-  "ratedVoltage": {"value": 380, "unit": "V"},
-  "ratedCurrent": {"value": 5, "unit": "A"},
-  "ctRatio": "100/5",
-  "ptRatio": "10000/100",
-  "measuredAt": "2026-11-10T08:30:00+08:00",
-  "sourceSystem": "collection"
-}</code></pre>
+              <p>研发看到异常提示时，最有价值的能力不是立刻判断“哪段程序错了”，而是先还原业务场景。</p>
+              <div class="diagnosis-ladder">
+                <div><span>第 1 层</span><strong>现象是什么</strong><p>无电压、电流偏大、电量偏低、采集失败、表号不一致，还是现场照片缺失？</p></div>
+                <div><span>第 2 层</span><strong>哪一个对象</strong><p>问题发生在客户、计量箱、电能表、互感器、终端、开关还是供电线路？</p></div>
+                <div><span>第 3 层</span><strong>影响什么业务</strong><p>影响客户正常用电、电费结算、线损分析、设备责任认定，还是巡视归档？</p></div>
+                <div><span>第 4 层</span><strong>现场是否确认</strong><p>异常是否有照片、表号、定位、测量值或现场人员说明作为证据？</p></div>
+                <div><span>第 5 层</span><strong>下一步交给谁</strong><p>继续观察、现场补抄、换表、采集运维、缺陷整改、档案核对还是客户答复？</p></div>
               </div>
               <div class="callout callout-amber">
-                <strong>示意数据结构，不代表正式接口。</strong>
-                <p>业务系统应通过版本和有效时间解释“测量时刻使用的是哪套参数”，尤其是换表和互感器变更前后。</p>
+                <strong>现场异常不是“一个红点”。</strong>
+                <p>同样是电量为零，原因可能是客户没有用电、停电、表计故障、接线错误、采集缺失或业务关系挂错。研发应推动页面把“现象、对象、时间、证据、状态和建议下一步”讲清楚。</p>
               </div>
             `,
           },
@@ -540,8 +601,8 @@ work_order             业务活动、处理人、结果和证据</code></pre>
                 <div><span>1</span><p>电压是势差，电流是流动，功率是变化快慢，电量是累计。</p></div>
                 <div><span>2</span><p>额定容量、额定电流、报装容量和实时负荷是不同概念。</p></div>
                 <div><span>3</span><p>交流功率判断需要考虑功率因数，不能只看电压乘电流。</p></div>
-                <div><span>4</span><p>互感器变比把现场大信号转换为可计量的小信号，参数必须按时间管理。</p></div>
-                <div><span>5</span><p>测量异常不能直接等同设备故障，要同时核对对象、口径、关系和时刻。</p></div>
+                <div><span>4</span><p>互感器变比把现场大信号转换为可计量的小信号，影响电量与线损判断。</p></div>
+                <div><span>5</span><p>测量异常不能直接等同设备故障，要同时核对对象、关系、时间和现场证据。</p></div>
               </div>
             `,
           },
@@ -608,22 +669,22 @@ work_order             业务活动、处理人、结果和证据</code></pre>
         ],
         next: {
           number: "03",
-          title: "电网设备与拓扑关系",
-          text: "下一章会把这些参数落到设备资产、连接边和业务关系上，解释空间拓扑为何容易与台账不一致。",
+          title: "配电网、台区与现场设备",
+          text: "下一章会把这些参数落到现场设备和供电关系上，解释为什么现场、档案和责任归属会出现不一致。",
         },
       },
       {
         id: "3",
         number: "03",
-        title: "设备、关系与拓扑",
-        subtitle: "同一只计量箱，为什么要同时维护资产信息、物理挂接、台区归属和责任关系",
-        duration: "约 15 分钟",
-        tags: ["设备资产", "空间拓扑", "箱表关系"],
+        title: "配电网、台区与现场设备",
+        subtitle: "看懂设备在哪里、由谁供电、谁负责管理，以及这些关系如何影响巡视和缺陷处理",
+        duration: "约 18 分钟",
+        tags: ["设备识别", "供电拓扑", "现场闭环"],
         objectives: [
-          "理解电网设备资产、拓扑边和业务归属的区别。",
-          "读懂从配变到台区、接入点、计量箱和电能表的关系链。",
-          "分析设备归属台区与人员当前所在台区不一致的业务含义。",
-          "用软件模型表达关系有效期、异常来源和历史追溯。",
+          "认识配网现场常见设备及其业务作用。",
+          "读懂从配电线路、配变、台区、接入点到计量箱和客户的供电关系。",
+          "理解“设备在这里”和“设备归这个台区、由这个人负责”不是同一件事。",
+          "把设备主人巡视、空间拓扑维护和缺陷整改串成完整现场闭环。",
         ],
         sections: [
           {
@@ -632,10 +693,10 @@ work_order             业务活动、处理人、结果和证据</code></pre>
             title: "1. 本节学习目标",
             html: `
               <div class="objective-grid">
-                <div class="objective-card"><span>01</span><p>区分“设备本体”和“设备之间的关系”。</p></div>
-                <div class="objective-card"><span>02</span><p>看懂配变、低压台区、接入点和计量箱的挂接链。</p></div>
-                <div class="objective-card"><span>03</span><p>识别拓扑、台账和业务归属不一致的异常。</p></div>
-                <div class="objective-card"><span>04</span><p>设计带有效期、来源和历史的关系数据模型。</p></div>
+                <div class="objective-card"><span>01</span><p>看到设备外形和位置，能说出它大致承担什么作用。</p></div>
+                <div class="objective-card"><span>02</span><p>看懂配变、低压台区、接入点和计量箱的供电关系。</p></div>
+                <div class="objective-card"><span>03</span><p>能判断档案归属、现场位置和责任人员为什么会冲突。</p></div>
+                <div class="objective-card"><span>04</span><p>理解一次巡视如何把现场事实转成缺陷和后续任务。</p></div>
               </div>
             `,
           },
@@ -652,7 +713,7 @@ work_order             业务活动、处理人、结果和证据</code></pre>
                 <div class="conflict-symbol">→</div>
                 <div><span>系统动作</span><strong>提示确认，而不是静默覆盖</strong></div>
               </div>
-              <p>当扫描设备归属台区与人员当前所在台区不一致时，系统需要确认应该依据“设备归属”还是“当前所在位置”继续作业。这是拓扑与组织/现场位置冲突的典型业务场景。</p>
+              <p>当扫描设备的归属台区与人员当前所在台区不一致时，系统需要确认应该依据“设备归属”还是“当前所在位置”继续作业。这体现的是同一个设备可能同时涉及物理位置、供电归属、管理责任和作业任务。</p>
             `,
           },
           {
@@ -662,70 +723,87 @@ work_order             业务活动、处理人、结果和证据</code></pre>
             html: `
               <div class="concept-list">
                 <article>
-                  <h3>设备资产</h3>
-                  <p>描述一个现实设备“是什么、编号是什么、属于谁、处于什么状态、安装在哪个位置”。例如一台配电变压器、一只计量箱或一块电能表。</p>
+                  <h3>配电线路与馈线</h3>
+                  <p>配电线路负责把电能从变电站或上级电源送到配变和用户附近。业务人员所说的“这条线”“这个馈线”，通常是在描述一个停电影响范围或设备责任范围。</p>
                 </article>
                 <article>
-                  <h3>拓扑关系</h3>
-                  <p>描述设备之间“谁连接到谁”或“谁向谁供电”。拓扑通常应作为关系对象管理，而不是只存一个上级设备名称。</p>
+                  <h3>供电拓扑</h3>
+                  <p>供电拓扑回答“电从哪里来、经过哪些设备、最后送到谁”。它不是地图上的距离关系，而是设备之间真实的供电连接关系。</p>
                 </article>
                 <article>
                   <h3>接入点</h3>
-                  <p>设备接入配电网络的业务/空间节点。项目中的计量箱可能需要挂接到已有接入点，也可能需要新建接入点并选择上级杆塔或分支箱开关。</p>
+                  <p>设备接入配电网络的位置。项目中的计量箱可能挂接到已有接入点，也可能需要新建接入点并选择上级杆塔、分支箱或开关。</p>
                 </article>
                 <article>
                   <h3>箱表关系</h3>
-                  <p>电能表安装在哪个计量箱、哪个行列表位的关系。它帮助现场找到表，也约束箱内容量和资产核对。</p>
+                  <p>电能表安装在哪个计量箱、哪个表位。它帮助现场找到具体的表，也帮助判断箱内是否有漏表、错表或换表未更新。</p>
                 </article>
                 <article>
-                  <h3>箱组</h3>
-                  <p>多个计量箱形成的柜体组合或空间组合。箱组不是简单的“父设备”，还表达现场安装布置和批量维护关系。</p>
+                  <h3>设备主人</h3>
+                  <p>对某台区或某类设备承担巡视、异常核查和维护责任的人。设备主人不等于客户经理，也不一定等于设备产权人。</p>
                 </article>
                 <article>
-                  <h3>设备主人与责任范围</h3>
-                  <p>谁对某台区或某类设备承担巡视、缺陷核查和维护责任。责任关系可能随组织调整、人员变更和区域划分变化。</p>
+                  <h3>产权、管理与使用</h3>
+                  <p>设备属于谁、由谁维护、给谁使用，是三个不同问题。现场出现问题时，先判断问题属于客户设备、供电企业设备，还是双方分界点，才能确定处理责任。</p>
                 </article>
+              </div>
+            `,
+          },
+          {
+            id: "devices",
+            short: "设备",
+            title: "4. 现场设备怎么认",
+            html: `
+              <p>研发不可能记住每台设备的具体型号，但应该能根据外形、所在位置和业务名称判断它大致属于哪一类设备。</p>
+              <figure class="lesson-figure lesson-figure-wide">
+                <img src="./assets/images/device-gallery.svg" alt="配电变压器、环网柜、开关柜、电缆分支箱、计量箱、智能电能表和采集终端示意" />
+                <figcaption>图 3-1　现场设备识别图册：配变负责降压，开关设备负责分接与联络，计量箱承载表计，终端负责上传数据。</figcaption>
+              </figure>
+              <div class="device-business-map">
+                <div><span>配变</span><p>理解台区范围、供电能力和低压用户规模。</p></div>
+                <div><span>开关 / 环网柜</span><p>理解故障隔离、负荷转供和停电影响范围。</p></div>
+                <div><span>分支箱</span><p>理解线路从哪里分叉，计量箱挂接到哪个节点。</p></div>
+                <div><span>计量箱 / 表</span><p>理解客户在哪里计量，换表与采集如何进行。</p></div>
+                <div><span>互感器</span><p>理解大电流或高电压如何进入计量装置。</p></div>
+                <div><span>采集终端</span><p>理解表计数据怎样传回采集主站。</p></div>
+              </div>
+              <div class="callout callout-amber">
+                <strong>外形只是入口。</strong>
+                <p>真正要理解的是“这台设备在哪个业务里出现”：它可能用于供电、计量、采集、巡视、停电处置，也可能同时承担多个作用。</p>
               </div>
             `,
           },
           {
             id: "objects",
             short: "拓扑",
-            title: "4. 从配变到电能表的关系链",
+            title: "5. 从配变到客户看懂供电拓扑",
             html: `
-              <div class="topology-deep">
-                <div class="topology-node node-source"><span>上级网络</span><strong>配电线路</strong></div>
-                <div class="topology-edge"><span>供电</span></div>
-                <div class="topology-node node-transformer"><span>物理设备</span><strong>配电变压器</strong></div>
-                <div class="topology-edge"><span>形成</span></div>
-                <div class="topology-node node-area"><span>管理对象</span><strong>低压台区</strong></div>
-                <div class="topology-branch">
-                  <div>
-                    <div class="topology-edge"><span>包含</span></div>
-                    <div class="topology-node"><span>网络节点</span><strong>低压线路 / 接入点</strong></div>
-                    <div class="topology-edge"><span>挂接</span></div>
-                    <div class="topology-node node-box"><span>现场资产</span><strong>计量箱</strong></div>
-                  </div>
-                  <div>
-                    <div class="topology-edge"><span>包含</span></div>
-                    <div class="topology-node"><span>计量位置</span><strong>表位 / 计量点</strong></div>
-                    <div class="topology-edge"><span>安装</span></div>
-                    <div class="topology-node node-meter"><span>计量资产</span><strong>电能表</strong></div>
-                  </div>
-                </div>
+              <figure class="lesson-figure lesson-figure-wide">
+                <img src="./assets/images/distribution-topology.svg" alt="变电站、中压配电线路、三台配电变压器、三个低压台区以及台区内计量箱和客户的拓扑示意" />
+                <figcaption>图 3-2　中压线路给配变供电，配变形成低压台区；台区内再通过低压线路、接入点、计量箱和表计供到客户。</figcaption>
+              </figure>
+              <div class="topology-reading">
+                <div><span>从哪来</span><strong>线路 → 配变</strong><p>判断停电和故障影响范围。</p></div>
+                <div><span>属于谁</span><strong>配变 → 台区</strong><p>判断用户归哪个台区管理。</p></div>
+                <div><span>接在哪</span><strong>接入点 → 计量箱</strong><p>判断箱体挂接和供电路径。</p></div>
+                <div><span>怎么量</span><strong>计量箱 → 表位 → 客户</strong><p>判断哪只表对应哪个客户。</p></div>
               </div>
               <div class="callout callout-green">
-                <strong>一条线不能装下所有含义。</strong>
-                <p>“变压器→台区”偏管理和供电范围，“接入点→计量箱”偏物理挂接，“计量箱→表位→电能表”偏现场安装。三种关系相关，但存储和变更责任可能不同。</p>
+                <strong>“台区一致”不等于“全部关系正确”。</strong>
+                <p>计量箱可能挂在正确的台区，却接错了接入点；箱表关系可能正确，却对应错客户；客户供电关系可能正确，却由错误的设备主人负责巡视。</p>
               </div>
             `,
           },
           {
             id: "process",
             short: "流程",
-            title: "5. 一次现场设备关系核对",
+            title: "6. 一次现场巡视怎样完成",
             html: `
               <p>结合设备主人巡视项目的页面顺序，可以抽象为：</p>
+              <figure class="lesson-figure lesson-figure-wide">
+                <img src="./assets/images/inspection-closed-loop.svg" alt="扫描设备、匹配档案、现场核对、识别缺陷、整改验收和归档的现场业务闭环" />
+                <figcaption>图 3-3　巡视发现只是闭环的起点；缺陷是否整改、档案是否同步、结果是否验收，才决定业务是否真正完成。</figcaption>
+              </figure>
               <div class="inspection-flow">
                 <div><span>01</span><strong>扫描箱或表</strong><p>识别设备编码和现场对象。</p></div>
                 <div><span>02</span><strong>匹配台区</strong><p>核对当前位置与设备归属，处理冲突。</p></div>
@@ -733,6 +811,12 @@ work_order             业务活动、处理人、结果和证据</code></pre>
                 <div><span>04</span><strong>核对表与设备</strong><p>箱内电能表、互感器、终端、开关和下户线。</p></div>
                 <div><span>05</span><strong>维护空间拓扑</strong><p>必要时挂接接入点或选择上级设备。</p></div>
                 <div><span>06</span><strong>形成结果</strong><p>正常结果上传；隐患转整改；变更更新档案。</p></div>
+              </div>
+              <div class="work-role-grid">
+                <div><span>派工人员</span><strong>决定为什么去、由谁去</strong><p>组织计划、工单和人员范围。</p></div>
+                <div><span>设备主人</span><strong>决定现场是否正常</strong><p>核对设备、记录证据、发现异常。</p></div>
+                <div><span>整改人员</span><strong>决定问题怎样处理</strong><p>整改、退回、补充材料并说明结果。</p></div>
+                <div><span>验收 / 管理人员</span><strong>决定能否关闭任务</strong><p>确认整改效果、档案变更和归档条件。</p></div>
               </div>
               <div class="exception-box">
                 <strong>易错点</strong>
@@ -748,62 +832,80 @@ work_order             业务活动、处理人、结果和证据</code></pre>
           {
             id: "project-case",
             short: "项目案例",
-            title: "6. 本地项目案例",
+            title: "7. 本地项目案例",
             html: `
               <div class="case-header">
-                <div><span>案例来源</span><strong>smart-patrol 空间拓扑关系维护</strong></div>
+                <div><span>案例来源</span><strong>空间拓扑 + 设备主人巡视 + 缺陷整改</strong></div>
                 <div class="case-badge">本地项目观察</div>
               </div>
-              <p>页面先通过变压器找到低压台区，再选择接入点或上级设备，最后确认计量箱与节点的挂接。页面同时展示资产编号、接入点名称和接入点ID。</p>
+              <p>空间拓扑维护先通过变压器找到低压台区，再选择接入点或上级设备，最后确认计量箱挂在哪里。现场巡视进一步核对箱体、表计和连线是否与业务资料一致。</p>
               <div class="scenario-card">
                 <p class="panel-label">真实问题</p>
                 <h3>“箱就在这里，为什么还要确认归属？”</h3>
-                <p>人员位置是现场作业坐标，设备归属是供电业务关系。箱体可能跨越台区边缘，也可能历史档案未更新。系统提示两种台区让人员确认，本质上是在防止用一个地点字段同时承担位置、归属和拓扑三种含义。</p>
+                <p>人员位置是现场作业事实，设备归属是供电业务关系。箱体可能位于台区边缘，也可能历史资料未更新。系统提示两种台区让人员确认，避免把“人在哪里”直接当成“设备归哪个台区”。</p>
               </div>
-              <div class="three-up">
-                <div><strong>计量箱建档</strong><p>回答箱是什么、箱内有哪些表、表位在哪里。</p></div>
-                <div><strong>空间拓扑</strong><p>回答箱挂接到哪个网络节点、由谁供电。</p></div>
-                <div><strong>设备主人巡视</strong><p>回答谁在什么工单和场景下核对现场、发现什么异常。</p></div>
+              <div class="project-scene-list">
+                <article>
+                  <span>建档问题</span>
+                  <h3>箱内标签模糊，是否仍是同一只箱？</h3>
+                  <p>不能只看系统名称。应核对箱体位置、内部表计、现场照片和周边参照物，再决定是原箱维护还是临时新增。</p>
+                  <strong>影响：后续箱表关系、巡视任务和资产追溯。</strong>
+                </article>
+                <article>
+                  <span>拓扑问题</span>
+                  <h3>箱在A台区旁边，却由B台区供电</h3>
+                  <p>现场距离不能直接代表供电关系。必须沿线路和上级设备核实，必要时由熟悉该线路的业务人员确认。</p>
+                  <strong>影响：线损归属、责任台区和故障影响范围。</strong>
+                </article>
+                <article>
+                  <span>巡视问题</span>
+                  <h3>箱内多出一只表，现场却无法确认客户</h3>
+                  <p>设备主人应先记录表号、表位、照片和现场情况，再由营销、计量或相关责任人员确认，而不是直接把表归到最近的客户。</p>
+                  <strong>影响：客户用电、计量关系和后续整改。</strong>
+                </article>
+                <article>
+                  <span>整改问题</span>
+                  <h3>缺陷处理完，是否就算任务结束？</h3>
+                  <p>还要检查是否补全材料、是否更新现场关系、是否需要验收。只写“已处理”通常不足以形成业务闭环。</p>
+                  <strong>影响：问题复发、责任追溯和验收结论。</strong>
+                </article>
               </div>
             `,
           },
           {
             id: "software",
-            short: "软件视角",
-            title: "7. 软件研发视角",
+            short: "业务联动",
+            title: "8. 一个现场问题如何联动多个业务",
             html: `
-              <p>推荐把拓扑和业务归属做成独立关系，并带有效期、来源和确认证据。</p>
-              <div class="model-table">
-                <div class="model-row model-head"><span>模型</span><span>关键内容</span><span>不能替代</span></div>
-                <div class="model-row"><span>asset</span><span>设备ID、类型、编码、状态、产权、安装位置</span><span>拓扑边</span></div>
-                <div class="model-row"><span>topology_edge</span><span>起点、终点、关系类型、来源、生效/失效时间</span><span>设备台账</span></div>
-                <div class="model-row"><span>installation</span><span>箱、表位、电能表、安装时间和拆除时间</span><span>客户关系</span></div>
-                <div class="model-row"><span>service_assignment</span><span>客户、供电点、计量点、台区、有效期</span><span>物理拓扑</span></div>
-                <div class="model-row"><span>site_check</span><span>工单、位置、对象、检查结果、证据和确认人</span><span>最终档案</span></div>
-              </div>
-              <div class="guideline-grid">
-                <div><span>设计原则 01</span><h3>资产身份稳定</h3><p>设备迁移或换装不应重建设备身份，而应关闭旧关系、创建新关系。</p></div>
-                <div><span>设计原则 02</span><h3>关系单独成对象</h3><p>关系有来源、有效期、变更原因和审核人，才能解释历史。</p></div>
-                <div><span>设计原则 03</span><h3>冲突显式呈现</h3><p>不自动选择权威值，先展示“设备归属、当前位置、档案关系”的冲突。</p></div>
-                <div><span>设计原则 04</span><h3>更新可追溯</h3><p>现场核对、人工修正和外部同步都要保留来源与证据。</p></div>
+              <p>以“计量箱现场发现未知电能表”为例，一次异常会牵动多个业务角色：</p>
+              <div class="business-chain">
+                <div><span>现场</span><strong>设备主人发现未知表</strong><p>记录表号、表位、箱号、定位和照片。</p></div>
+                <i>→</i>
+                <div><span>计量</span><strong>确认表是否在册</strong><p>判断是否有档案、是否属于待安装或已拆除资产。</p></div>
+                <i>→</i>
+                <div><span>营销</span><strong>确认客户与用电关系</strong><p>判断该表对应哪个客户、地址或供电点。</p></div>
+                <i>→</i>
+                <div><span>运检 / 整改</span><strong>补关系或处理缺陷</strong><p>明确责任人、完成现场处理并留下证据。</p></div>
+                <i>→</i>
+                <div><span>归档</span><strong>确认结果</strong><p>现场、业务关系和后续任务都完成后再关闭。</p></div>
               </div>
               <div class="callout callout-amber">
-                <strong>权限也要分层。</strong>
-                <p>能查看一只表、能修改计量箱档案、能调整拓扑关系、能确认设备归属，可能是四种不同权限。组织范围、设备责任范围和现场任务范围也不应混为一个字段。</p>
+                <strong>跨业务协作的核心是“谁有权确认什么”。</strong>
+                <p>现场人员最了解现场事实，不代表能独立确定客户关系；营销人员了解客户，不代表能判断现场接线；计量人员能核表，不代表能完成设备缺陷整改。研发应让页面清楚表达“谁发现、谁确认、谁处理、谁验收”。</p>
               </div>
             `,
           },
           {
             id: "summary",
             short: "总结",
-            title: "8. 本节总结",
+            title: "9. 本节总结",
             html: `
               <div class="takeaway-list">
-                <div><span>1</span><p>设备资产回答“是什么”，拓扑关系回答“连到哪”。</p></div>
-                <div><span>2</span><p>配变、台区、接入点、计量箱和电能表处在不同业务层次。</p></div>
-                <div><span>3</span><p>人员位置、设备归属和档案归属可能冲突，应显式核实。</p></div>
-                <div><span>4</span><p>箱表关系、客户关系和空间拓扑必须分别建模。</p></div>
-                <div><span>5</span><p>关系变更需要有效期、来源、证据和审核，不能只覆盖当前值。</p></div>
+                <div><span>1</span><p>认识设备不仅看外形，还要知道它在供电和业务中的作用。</p></div>
+                <div><span>2</span><p>供电拓扑回答“电从哪里来、经过哪些设备、送到谁”。</p></div>
+                <div><span>3</span><p>人员位置、设备归属、管理责任和客户关系是不同业务事实。</p></div>
+                <div><span>4</span><p>巡视发现问题后，需要经过确认、处理、验收和归档形成闭环。</p></div>
+                <div><span>5</span><p>现场异常往往需要营销、计量、运检和整改人员共同确认责任。</p></div>
               </div>
             `,
           },
@@ -850,21 +952,21 @@ work_order             业务活动、处理人、结果和证据</code></pre>
           },
           {
             id: "q3-3",
-            question: "一只电能表从1号表位更换到2号表位，较好的数据设计是什么？",
+            question: "完成换表后，如果业务系统仍把旧表当作当前表，最直接的业务影响是什么？",
             options: [
-              "直接覆盖表位上原来的表号，不保留记录",
-              "删除该电能表资产，再新建一个新设备",
-              "结束旧安装关系，创建新安装关系并保留时间和原因",
-              "只修改客户地址，表位关系无关紧要",
+              "后续巡视会找错表，电量与客户计量关系的追溯也可能中断",
+              "没有影响，旧表被拆下后系统记录会自动失效",
+              "只影响地图图标，不影响现场和计量业务",
+              "只影响标签打印，不影响客户用电",
             ],
-            correct: 2,
+            correct: 0,
             explanation:
-              "设备身份与安装关系应分离。通过关闭旧关系、创建新关系，可以保留设备生命周期和现场历史。",
+              "系统当前表与现场不一致，会导致后续巡视、换表追溯、采集核对、客户计量关系等多类业务出现判断偏差。",
             optionNotes: [
-              "覆盖会丢失历史，无法解释旧表位数据。",
-              "设备本体没有消失，删除资产会破坏连续性。",
-              "正确答案：关系有时间段，资产身份保持稳定。",
-              "表位会直接影响现场定位和箱表核对。",
+              "正确答案：当前表错误会直接影响现场核对和计量追溯。",
+              "设备从现场拆除不等于业务关系自动正确结束。",
+              "地图只是表现之一，现场、计量和客户业务都会受影响。",
+              "表与客户的对应关系会影响后续多类业务。",
             ],
           },
         ],

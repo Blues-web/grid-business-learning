@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">设备巡视与缺陷闭环</title>
+  <desc id="desc">从扫描设备、核对档案、现场检查、发现异常、整改验收到更新档案和归档的闭环流程。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f9f6ee"/><stop offset="1" stop-color="#e3eee8"/></linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#17302e" flood-opacity=".12"/></filter>
+    <style>
+      .h{font:700 30px "PingFang SC","Microsoft YaHei",sans-serif;fill:#17302e}
+      .s{font:400 14px "PingFang SC","Microsoft YaHei",sans-serif;fill:#526764}
+      .n{font:700 18px "PingFang SC","Microsoft YaHei",sans-serif;fill:#17302e}
+      .c{font:400 13px "PingFang SC","Microsoft YaHei",sans-serif;fill:#526764}
+      .num{font:700 12px "SFMono-Regular","Microsoft YaHei",monospace;fill:#08735b}
+    </style>
+  </defs>
+  <rect width="1200" height="560" rx="30" fill="url(#bg)"/>
+  <text x="50" y="55" class="h">一次现场工作怎样形成闭环</text>
+  <text x="50" y="82" class="s">巡视不是“拍照交差”，而是把现场事实、业务判断、后续处置和最终归档串成一条证据链。</text>
+
+  <path d="M109 253C109 128 245 109 369 109H833C965 109 1091 132 1091 253C1091 375 965 405 833 405H369C233 405 109 374 109 253Z" fill="none" stroke="#b9cdc5" stroke-width="3" stroke-dasharray="9 8"/>
+
+  <g filter="url(#sh)">
+    <rect x="73" y="157" width="162" height="176" rx="20" fill="#fffdf8" stroke="#d7dfd9"/>
+    <rect x="262" y="157" width="162" height="176" rx="20" fill="#fffdf8" stroke="#d7dfd9"/>
+    <rect x="451" y="157" width="162" height="176" rx="20" fill="#fffdf8" stroke="#d7dfd9"/>
+    <rect x="640" y="157" width="162" height="176" rx="20" fill="#073f37"/>
+    <rect x="829" y="157" width="162" height="176" rx="20" fill="#fffdf8" stroke="#d7dfd9"/>
+    <rect x="1018" y="157" width="120" height="176" rx="20" fill="#fffdf8" stroke="#d7dfd9"/>
+  </g>
+
+  <g>
+    <text x="94" y="188" class="num">01 · SCAN</text>
+    <path d="M123 214h48M123 250h48M117 228v40M177 228v40" stroke="#c97823" stroke-width="5"/>
+    <path d="M140 228h35M158 214v54" stroke="#1aa27d" stroke-width="3" opacity=".55"/>
+    <text x="94" y="292" class="n">扫描设备</text><text x="94" y="315" class="c">识别箱、表或终端</text>
+  </g>
+  <g>
+    <text x="283" y="188" class="num">02 · MATCH</text>
+    <rect x="312" y="211" width="62" height="45" rx="7" fill="#e8f6f0" stroke="#1aa27d" stroke-width="2"/>
+    <path d="M325 226h35M325 237h25" stroke="#08735d" stroke-width="3"/>
+    <path d="M348 266l17 17 31-35" fill="none" stroke="#0a8a68" stroke-width="6" stroke-linecap="round"/>
+    <text x="283" y="292" class="n">匹配档案</text><text x="283" y="315" class="c">核对台区、客户和设备</text>
+  </g>
+  <g>
+    <text x="472" y="188" class="num">03 · INSPECT</text>
+    <circle cx="528" cy="237" r="27" fill="none" stroke="#0a6653" stroke-width="5"/>
+    <path d="M550 259l21 21" stroke="#0a6653" stroke-width="7" stroke-linecap="round"/>
+    <path d="M517 237l8 8 16-18" fill="none" stroke="#d0ee76" stroke-width="5" stroke-linecap="round"/>
+    <text x="472" y="292" class="n">现场核对</text><text x="472" y="315" class="c">箱、表、互感器与接线</text>
+  </g>
+  <g>
+    <text x="661" y="188" class="num" style="fill:#d0ee76">04 · DEFECT</text>
+    <path d="M722 212l45 27v48l-45 27-45-27v-48z" fill="none" stroke="#d0ee76" stroke-width="4"/>
+    <path d="M722 229v40M722 284v2" stroke="#d0ee76" stroke-width="6" stroke-linecap="round"/>
+    <text x="661" y="292" class="n" style="fill:#fff">识别缺陷</text><text x="661" y="315" class="c" style="fill:#b8d4cc">等级、位置、证据</text>
+  </g>
+  <g>
+    <text x="850" y="188" class="num">05 · RECTIFY</text>
+    <rect x="881" y="215" width="70" height="46" rx="8" fill="#fff4df" stroke="#c97823" stroke-width="2"/>
+    <path d="M893 263l18 20 37-48" fill="none" stroke="#0a8a68" stroke-width="6" stroke-linecap="round"/>
+    <text x="850" y="292" class="n">整改验收</text><text x="850" y="315" class="c">处理、照片和复核</text>
+  </g>
+  <g>
+    <text x="1035" y="188" class="num">06 · ARCHIVE</text>
+    <path d="M1048 211h63v58h-63z" fill="none" stroke="#0a6653" stroke-width="4"/>
+    <path d="M1057 222h45M1057 235h45M1057 248h28" stroke="#0a6653" stroke-width="3"/>
+    <text x="1035" y="292" class="n">归档</text><text x="1035" y="315" class="c">形成完整结果</text>
+  </g>
+
+  <g>
+    <path d="M236 253h25M425 253h25M614 253h25M803 253h25M992 253h25" stroke="#86a29a" stroke-width="3"/>
+    <path d="M249 247l12 6-12 6M438 247l12 6-12 6M627 247l12 6-12 6M816 247l12 6-12 6M1005 247l12 6-12 6" fill="#86a29a"/>
+  </g>
+
+  <g transform="translate(206 426)">
+    <rect x="0" y="0" width="788" height="82" rx="17" fill="#fffdf8" stroke="#d7dfd9"/>
+    <text x="24" y="28" class="num">业务判断</text>
+    <text x="24" y="54" class="c">正常结果并不等于所有关系都正确；缺陷存在也不等于设备立即损坏。先判断“对象、关系、状态、证据、责任”再决定下一步。</text>
+  </g>
+</svg>

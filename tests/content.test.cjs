@@ -1,5 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 
 require("../assets/content.js");
 
@@ -40,4 +42,28 @@ test("课程正文没有遗留占位符", () => {
   assert.equal(serialized.includes("TBD"), false);
   assert.equal(serialized.includes("TODO"), false);
   assert.equal(serialized.includes("待补充"), false);
+});
+
+test("课程正文不包含数据库和接口实现示例", () => {
+  const serialized = JSON.stringify(course);
+  assert.equal(serialized.includes("model-table"), false);
+  assert.equal(serialized.includes("接口设计示意"), false);
+  assert.equal(serialized.includes("<pre><code>"), false);
+});
+
+test("所有教学插图均存在于本地资源目录", () => {
+  const serialized = JSON.stringify(course);
+  const sources = [...serialized.matchAll(/src=\\?\"([^\"\\]+)\\+?/g)].map(
+    (match) => match[1],
+  );
+
+  assert.ok(sources.length >= 6);
+  sources.forEach((source) => {
+    const relative = source.replace("./", "");
+    assert.equal(
+      fs.existsSync(path.join(__dirname, "..", relative)),
+      true,
+      `缺少教学插图：${source}`,
+    );
+  });
 });
