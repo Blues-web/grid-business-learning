@@ -3002,6 +3002,103 @@ button.roadmap-lesson:hover {
   font-size: 0.68rem;
 }
 
+.route-preview-hero {
+  background:
+    radial-gradient(circle at 88% 20%, rgba(26, 162, 125, 0.18), transparent 24%),
+    linear-gradient(145deg, var(--green-950), #0a2e2a);
+}
+
+.route-preview-body {
+  padding-top: 22px;
+}
+
+.route-preview-chip {
+  padding: 6px 9px;
+  border-radius: 7px;
+  color: var(--green-700);
+  background: var(--green-100);
+  font-size: 0.68rem;
+}
+
+.route-preview-summary {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  margin-top: 38px;
+  padding: 26px;
+  border-radius: var(--radius-lg);
+  color: var(--white);
+  background: var(--green-950);
+}
+
+.route-preview-number {
+  color: var(--acid);
+  font-family: var(--font-serif);
+  font-size: 4.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.route-preview-summary h2 {
+  margin-bottom: 10px;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+}
+
+.route-preview-summary > div > p:last-child {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.82rem;
+}
+
+.route-preview-section {
+  padding: 34px 0;
+  border-top: 1px solid var(--line);
+}
+
+.route-preview-section > p:not(.eyebrow) {
+  color: var(--ink-soft);
+}
+
+.route-preview-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.route-preview-points > div {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.route-preview-points span {
+  color: var(--green-500);
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+}
+
+.route-preview-points strong {
+  display: block;
+  margin-top: 7px;
+  font-size: 0.88rem;
+}
+
+.route-preview-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 28px 0 10px;
+  border-top: 1px solid var(--line);
+}
+
+.route-preview-navigation .button {
+  max-width: 46%;
+  white-space: normal;
+  text-align: left;
+}
+
 .confirm-dialog form {
   padding: 26px;
 }
@@ -3376,6 +3473,25 @@ button.roadmap-lesson:hover {
   .question-stack div {
     grid-template-columns: 1fr;
     gap: 4px;
+  }
+
+  .route-preview-summary {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .route-preview-points {
+    grid-template-columns: 1fr;
+  }
+
+  .route-preview-navigation {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .route-preview-navigation .button {
+    width: 100%;
+    max-width: none;
   }
 
   .roadmap-principles > div {

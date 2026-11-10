@@ -42,6 +42,7 @@
   let quizResult = null;
   let toastTimer = null;
   let readingFrame = null;
+  let roadmapPreviewNumber = null;
 
   function loadStoredState() {
     try {
@@ -82,6 +83,12 @@
     );
   }
 
+  function allRoadmapLessons() {
+    return roadmap.stages.flatMap((stage) =>
+      stage.lessons.map((lesson) => ({ ...lesson, stage })),
+    );
+  }
+
   function statusMap() {
     return new Map(
       Progress.chapterStatuses(state, chapters, today).map((item) => [Number(item.id), item]),
@@ -103,6 +110,7 @@
     state.currentChapter = target;
     state.lastActiveDate = today;
     currentChapterNumber = target;
+    roadmapPreviewNumber = null;
     quizResult = null;
     saveState();
     renderAll();
@@ -130,17 +138,15 @@
       button.type = "button";
       button.className = `course-item status-${status.status}`;
       button.dataset.chapter = chapter.id;
-      button.disabled = status.status === "locked";
       button.setAttribute(
         "aria-label",
         `${chapter.number} ${chapter.title}，${statusText(status)}`,
       );
-      if (Number(chapter.id) === currentChapterNumber) {
+      if (!roadmapPreviewNumber && Number(chapter.id) === currentChapterNumber) {
         button.setAttribute("aria-current", "page");
       }
 
-      const statusIcon =
-        status.status === "completed" ? "✓" : status.status === "available" ? "→" : "锁";
+      const statusIcon = status.status === "completed" ? "✓" : "→";
       button.innerHTML = `
         <span class="course-number">${chapter.number}</span>
         <span class="course-copy">
@@ -168,20 +174,12 @@
     dom.stageBadge.textContent = `已开放 ${readyCount} 讲`;
 
     if (completedCount === chapters.length) {
-      dom.progressNote.textContent = "已开放课程已完成，完整路线仍可查看";
+      dom.progressNote.textContent = "已开放课程已完成，可自由复习";
     } else {
-      const next = statuses.get(Number(currentChapterNumber));
       if (!storageAvailable) {
         dom.progressNote.textContent = "当前浏览器无法保存进度";
-      } else if (next?.status === "completed") {
-        const following = chapters.find(
-          (chapter) => Number(chapter.id) === Number(currentChapterNumber) + 1,
-        );
-        dom.progressNote.textContent = following
-          ? `第${following.number}章已解锁，可立即继续`
-          : "章节已完成，可随时复习";
       } else {
-        dom.progressNote.textContent = "完成本章测验后立即开放下一章";
+        dom.progressNote.textContent = "32 讲均可自由查看";
       }
     }
   }
@@ -193,7 +191,7 @@
     if (status.status === "available") {
       return "可学习";
     }
-    return "锁定，请先完成前一章";
+    return "可学习";
   }
 
   function renderChapter() {
@@ -335,8 +333,8 @@
                           ? "已完成"
                           : status.status === "available"
                             ? "可学习"
-                            : "按顺序待学"
-                        : "规划中";
+                            : "可学习"
+                        : "课程导览";
                       const content = `
                         <span class="roadmap-lesson-number">${lesson.number}</span>
                         <span class="roadmap-lesson-main">
@@ -347,9 +345,7 @@
                         </span>
                         <span class="roadmap-lesson-status ${status?.status || "planned"}">${stateLabel}</span>
                       `;
-                      return lesson.chapterId
-                        ? `<li><button type="button" class="roadmap-lesson is-ready" data-roadmap-chapter="${lesson.chapterId}">${content}</button></li>`
-                        : `<li><div class="roadmap-lesson is-planned">${content}</div></li>`;
+                      return `<li><button type="button" class="roadmap-lesson ${lesson.chapterId ? "is-ready" : "is-guide"}" data-roadmap-lesson="${lesson.number}" ${lesson.chapterId ? `data-roadmap-chapter="${lesson.chapterId}"` : ""}>${content}</button></li>`;
                     })
                     .join("")}
                 </ol>
@@ -359,6 +355,82 @@
           .join("")}
       </div>
     `;
+  }
+
+  function renderRoadmapPreview() {
+    const lessons = allRoadmapLessons();
+    const index = lessons.findIndex(
+      (lesson) => Number(lesson.number) === Number(roadmapPreviewNumber),
+    );
+    const lesson = lessons[index];
+    if (!lesson) {
+      selectChapter(currentChapterNumber);
+      return;
+    }
+
+    const previous = lessons[index - 1];
+    const next = lessons[index + 1];
+    document.title = `${lesson.number} ${lesson.title}｜课程导览`;
+    dom.breadcrumb.textContent = `第${lesson.number}讲`;
+    dom.chapter.innerHTML = `
+      <header class="chapter-hero route-preview-hero">
+        <div class="hero-copy">
+          <div class="hero-meta">
+            <span class="stage-pill">${lesson.stage.title}</span>
+            <span>阶段 ${lesson.stage.order}</span>
+            <span>课程导览</span>
+          </div>
+          <p class="hero-kicker">LEARNING ROUTE PREVIEW</p>
+          <h1>${lesson.title}</h1>
+          <p class="hero-subtitle">${lesson.goal}</p>
+          <div class="tag-list">${lesson.keyPoints.map((point) => `<span>${point}</span>`).join("")}</div>
+        </div>
+        <aside class="hero-objectives">
+          <p class="eyebrow">课程位置</p>
+          <p><span>${lesson.number}</span>${lesson.stage.subtitle}</p>
+          <p><span>→</span>${lesson.goal}</p>
+          <p><span>源</span>关联项目：${lesson.source}</p>
+        </aside>
+      </header>
+      <div class="chapter-toolbar">
+        <nav class="section-nav" aria-label="路线导览导航">
+          <span class="route-preview-chip">全路线 ${lessons.length} 讲</span>
+          <span class="route-preview-chip">本讲可自由查看</span>
+        </nav>
+        <span class="completion-chip">课程导览</span>
+      </div>
+      <div class="reading-column route-preview-body">
+        <section class="route-preview-summary">
+          <div class="route-preview-number">${lesson.number}</div>
+          <div>
+            <p class="eyebrow">本讲学习目标</p>
+            <h2>${lesson.goal}</h2>
+            <p>本讲详细正文正在按学习路线逐步补充。当前已经可以查看课程定位、关键知识和项目来源，便于先建立整体知识网络。</p>
+          </div>
+        </section>
+        <section class="route-preview-section">
+          <p class="eyebrow">先掌握这几个概念</p>
+          <div class="route-preview-points">
+            ${lesson.keyPoints.map((point, pointIndex) => `<div><span>${String(pointIndex + 1).padStart(2, "0")}</span><strong>${point}</strong></div>`).join("")}
+          </div>
+        </section>
+        <section class="route-preview-section">
+          <p class="eyebrow">在实际业务中如何定位</p>
+          <p>${lesson.stage.goal}</p>
+          <div class="callout callout-green">
+            <strong>学习建议</strong>
+            <p>先理解本讲与前后课程的关系，再结合平台、装拆、巡视、建档、拓扑和缺陷项目查看真实页面。不要把系统字段直接当成完整业务概念。</p>
+          </div>
+        </section>
+        <nav class="route-preview-navigation" aria-label="路线前后课程">
+          ${previous ? `<button class="button button-secondary" type="button" data-route-preview-number="${previous.number}">上一讲 · ${previous.title}</button>` : "<span></span>"}
+          ${next ? `<button class="button button-primary" type="button" data-route-preview-number="${next.number}">下一讲 · ${next.title}</button>` : "<span></span>"}
+        </nav>
+      </div>
+    `;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    dom.chapter.focus({ preventScroll: true });
+    requestReadingUpdate();
   }
 
   function renderQuiz() {
@@ -502,7 +574,7 @@
           <strong>${quizResult.score} / ${chapter.quiz.length}</strong>
         </div>
         <div class="quiz-actions">
-          <p>${passed ? "下一章已解锁，可立即继续。" : `至少答对 ${passScore} 题。建议复习对应知识后再试一次。`}</p>
+          <p>${passed ? "本章已完成，可自由查看其他课程。" : `至少答对 ${passScore} 题。建议复习对应知识后再试一次。`}</p>
           <button class="button button-secondary" type="button" data-action="retry-quiz">重新作答</button>
         </div>
       `;
@@ -541,7 +613,7 @@
       const firstCompletion = !state.completed[chapter.id];
       state = Progress.completeChapter(state, chapter.id, score, chapter.quiz.length, today);
       saveState();
-      showToast(firstCompletion ? "本章已完成，下一章已立即开放。" : "测验结果已保存。", "success");
+      showToast(firstCompletion ? "本章已完成，可自由查看其他课程。" : "测验结果已保存。", "success");
     } else {
       showToast("本章尚未完成，请查看解析后重新作答。", "warning");
     }
@@ -581,21 +653,18 @@
         <div class="completion-icon">日</div>
         <div>
           <p class="eyebrow">学习进度</p>
-          <h3>完成本章测验后，下一章立即开放</h3>
-          <p>不限制学习时间。你可以连续学习，也可以随时回到已完成章节复习。</p>
+          <h3>所有课程均可自由查看</h3>
+          <p>完成测验只用于记录掌握情况，不限制课程访问顺序。</p>
         </div>
       `;
       return;
     }
 
-    const nextStatus = nextChapter ? statusMap().get(Number(nextChapter.id)) : null;
     const nextText = !nextChapter
-      ? "当前版本的三章学习已完成。后续版本将继续扩展配电与台区课程。"
-      : nextStatus?.status === "available"
-        ? `第${nextChapter.number}章已解锁，不需要等待第二天。`
-        : "";
+      ? "当前版本前三讲已完成，后续课程可从完整路线查看导览。"
+      : `你可以继续第${nextChapter.number}章，也可以自由查看其他课程。`;
     const nextAction =
-      nextChapter && nextStatus?.status === "available"
+      nextChapter
         ? `<button class="button button-primary completion-next" type="button" data-action="continue-next" data-chapter="${nextChapter.id}">继续学习第${nextChapter.number}章</button>`
         : "";
 
@@ -621,7 +690,11 @@
 
   function renderAll() {
     renderSidebar();
-    renderChapter();
+    if (roadmapPreviewNumber) {
+      renderRoadmapPreview();
+    } else {
+      renderChapter();
+    }
     dom.todayLabel.textContent = formatToday();
   }
 
@@ -691,15 +764,9 @@
 
     today = newToday;
     state = Progress.normalizeState(state, today);
-    const next = Progress.resolveCurrentChapter(state, chapters, today, true);
-    currentChapterNumber = next;
-    state.currentChapter = next;
     state.lastActiveDate = today;
-    quizResult = null;
     saveState();
     renderAll();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    showToast("已进入新的一天，学习进度已自动更新。", "success");
   }
 
   function handleInitialChapter() {
@@ -725,12 +792,18 @@
     }
   });
   dom.roadmapDialog.addEventListener("click", (event) => {
-    const lesson = event.target.closest("[data-roadmap-chapter]");
+    const lesson = event.target.closest("[data-roadmap-lesson]");
     if (!lesson) {
       return;
     }
     closeRoadmap();
-    selectChapter(lesson.dataset.roadmapChapter);
+    const targetChapter = lesson.dataset.roadmapChapter;
+    if (targetChapter) {
+      selectChapter(targetChapter);
+      return;
+    }
+    roadmapPreviewNumber = lesson.dataset.roadmapLesson;
+    renderAll();
   });
   dom.resetButton.addEventListener("click", () => dom.resetDialog.showModal());
   dom.resetDialog.addEventListener("close", () => {
@@ -749,6 +822,20 @@
 
   dom.chapter.addEventListener("click", (event) => {
     const continueButton = event.target.closest("[data-action='continue-next']");
+    const previewButton = event.target.closest("[data-route-preview-number]");
+    if (previewButton) {
+      const lesson = allRoadmapLessons().find(
+        (item) => Number(item.number) === Number(previewButton.dataset.routePreviewNumber),
+      );
+      if (lesson?.chapterId) {
+        selectChapter(lesson.chapterId);
+      } else {
+        roadmapPreviewNumber = previewButton.dataset.routePreviewNumber;
+        renderAll();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      return;
+    }
     if (!continueButton) {
       return;
     }

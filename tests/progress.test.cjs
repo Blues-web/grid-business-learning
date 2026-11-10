@@ -4,43 +4,41 @@ const Progress = require("../assets/progress.js");
 
 const chapters = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
-test("首次打开只有第01章可学习", () => {
+test("首次打开所有已发布章节都可学习", () => {
   const state = Progress.createDefaultState("2026-11-10");
   const statuses = Progress.chapterStatuses(state, chapters, "2026-11-10");
 
   assert.deepEqual(
     statuses.map((item) => item.status),
-    ["available", "locked", "locked"],
+    ["available", "available", "available"],
   );
   assert.equal(Progress.resolveCurrentChapter(state, chapters, "2026-11-10"), 1);
 });
 
-test("完成第01章后立即解锁第02章", () => {
+test("完成第01章不影响其他章节访问", () => {
   let state = Progress.createDefaultState("2026-11-10");
   state = Progress.completeChapter(state, "1", 3, 3, "2026-11-10");
 
   const statuses = Progress.chapterStatuses(state, chapters, "2026-11-10");
   assert.equal(statuses[0].status, "completed");
   assert.equal(statuses[1].status, "available");
-  assert.equal(statuses[2].status, "locked");
+  assert.equal(statuses[2].status, "available");
 });
 
-test("不需要等待次日即可选择第02章", () => {
+test("可以直接选择任意已发布章节", () => {
   let state = Progress.createDefaultState("2026-11-10");
-  state = Progress.completeChapter(state, "1", 2, 3, "2026-11-10");
-
-  const statuses = Progress.chapterStatuses(state, chapters, "2026-11-10");
-  assert.equal(statuses[1].status, "available");
-  assert.equal(Progress.resolveCurrentChapter(state, chapters, "2026-11-10", true), 2);
+  state.currentChapter = 3;
+  assert.equal(Progress.resolveCurrentChapter(state, chapters, "2026-11-10", true), 3);
 });
 
-test("章节必须按顺序推进", () => {
+test("完成记录可以乱序产生", () => {
   let state = Progress.createDefaultState("2026-11-10");
   state = Progress.completeChapter(state, "2", 3, 3, "2026-11-10");
 
   const statuses = Progress.chapterStatuses(state, chapters, "2026-11-12");
-  assert.equal(statuses[1].status, "locked");
-  assert.equal(statuses[2].status, "locked");
+  assert.equal(statuses[1].status, "completed");
+  assert.equal(statuses[0].status, "available");
+  assert.equal(statuses[2].status, "available");
 });
 
 test("重复完成保留原完成日期并记录更高分", () => {
@@ -55,7 +53,7 @@ test("重复完成保留原完成日期并记录更高分", () => {
   });
 });
 
-test("完成三章后进入最后一章复习", () => {
+test("全部完成后仍保留当前自由选择", () => {
   let state = Progress.createDefaultState("2026-11-10");
   state = Progress.completeChapter(state, "1", 3, 3, "2026-11-10");
   state = Progress.completeChapter(state, "2", 3, 3, "2026-11-10");
@@ -66,7 +64,8 @@ test("完成三章后进入最后一章复习", () => {
     statuses.map((item) => item.status),
     ["completed", "completed", "completed"],
   );
-  assert.equal(Progress.resolveCurrentChapter(state, chapters, "2026-11-10", true), 3);
+  state.currentChapter = 2;
+  assert.equal(Progress.resolveCurrentChapter(state, chapters, "2026-11-10", true), 2);
 });
 
 test("测验分数按正确选项计算", () => {

@@ -108,41 +108,14 @@
   }
 
   function chapterStatuses(state, chapters, today = dateKey()) {
-    const statuses = [];
-
-    chapters.forEach((chapter, index) => {
-      const number = Number(chapter.id);
-      const recordedCompletion = state.completed[chapter.id];
-      const previousStatus = index > 0 ? statuses[index - 1] : null;
-
-      // 完成记录只有在前序章节有效完成后才生效，保证章节按顺序推进。
-      if (recordedCompletion && (index === 0 || previousStatus?.status === "completed")) {
-        statuses.push({
-          id: chapter.id,
-          status: "completed",
-          completion: recordedCompletion,
-        });
-        return;
-      }
-
-      if (index === 0) {
-        statuses.push({ id: chapter.id, status: "available" });
-        return;
-      }
-
-      if (previousStatus?.status !== "completed") {
-        statuses.push({ id: chapter.id, status: "locked", number });
-        return;
-      }
-
-      statuses.push({
+    return chapters.map((chapter) => {
+      const completion = state.completed[chapter.id];
+      return {
         id: chapter.id,
-        status: "available",
-        number,
-      });
+        status: completion ? "completed" : "available",
+        completion: completion || null,
+      };
     });
-
-    return statuses;
   }
 
   function findFirstAvailableIncomplete(state, chapters, today = dateKey()) {
@@ -166,23 +139,10 @@
   }
 
   function resolveCurrentChapter(state, chapters, today = dateKey(), newDay = false) {
-    const statuses = chapterStatuses(state, chapters, today);
-
-    if (newDay) {
-      const next = findFirstAvailableIncomplete(state, chapters, today);
-      if (next !== null) {
-        return next;
-      }
-
-      const completed = statuses
-        .filter((item) => item.status === "completed")
-        .map((item) => Number(item.id));
-      if (completed.length) {
-        return completed[completed.length - 1];
-      }
-    }
-
-    return findLatestAccessible(state, chapters, today);
+    const currentExists = chapters.some(
+      (chapter) => Number(chapter.id) === Number(state.currentChapter),
+    );
+    return currentExists ? Number(state.currentChapter) : Number(chapters[0]?.id || 1);
   }
 
   function quizScore(answers, quiz) {
