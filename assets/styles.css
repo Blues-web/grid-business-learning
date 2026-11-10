@@ -1730,7 +1730,9 @@ code {
 .business-cause-grid,
 .device-business-map,
 .topology-reading,
-.work-role-grid {
+.work-role-grid,
+.plain-term-grid,
+.project-term-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
@@ -1750,6 +1752,39 @@ code {
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: rgba(255, 253, 248, 0.78);
+}
+
+.plain-term-grid > div,
+.project-term-grid > div {
+  padding: 14px 15px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 253, 248, 0.8);
+}
+
+.plain-term-grid b,
+.plain-term-grid span,
+.project-term-grid b,
+.project-term-grid span {
+  display: block;
+}
+
+.plain-term-grid b,
+.project-term-grid b {
+  color: var(--green-800);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.plain-term-grid span,
+.project-term-grid span {
+  margin-top: 5px;
+  color: var(--ink-soft);
+  font-size: 0.77rem;
+}
+
+.project-term-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .business-role-grid span,
@@ -2654,6 +2689,10 @@ code {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .project-term-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .metric-hero div:last-child {
     grid-column: span 2;
   }
@@ -2890,7 +2929,9 @@ code {
   .business-cause-grid,
   .device-business-map,
   .topology-reading,
-  .work-role-grid {
+  .work-role-grid,
+  .plain-term-grid,
+  .project-term-grid {
     grid-template-columns: 1fr;
   }
 
