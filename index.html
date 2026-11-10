@@ -66,8 +66,15 @@
         <nav aria-label="课程章节">
           <div class="nav-heading">
             <span>学习路线</span>
-            <span class="nav-badge">基础阶段</span>
+            <span class="nav-badge" id="stage-badge">基础阶段</span>
           </div>
+          <button class="roadmap-entry" id="open-roadmap" type="button">
+            <span>
+              <strong>完整学习路线</strong>
+              <small>4 阶段 · 32 讲</small>
+            </span>
+            <span aria-hidden="true">↗</span>
+          </button>
           <ol class="course-list" id="course-list"></ol>
         </nav>
 
@@ -112,6 +119,22 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
+    <dialog class="roadmap-dialog" id="roadmap-dialog">
+      <div class="roadmap-dialog-header">
+        <div>
+          <p class="eyebrow">业务知识网络</p>
+          <h2 id="roadmap-title">完整学习路线</h2>
+          <p id="roadmap-summary"></p>
+        </div>
+        <button class="roadmap-close" id="close-roadmap" type="button" aria-label="关闭学习路线">×</button>
+      </div>
+      <div class="roadmap-content" id="roadmap-content"></div>
+      <div class="roadmap-dialog-footer">
+        <p>当前仅开放第一阶段前 3 讲正文，后续按路线逐讲补充。</p>
+        <button class="button button-secondary" id="roadmap-footer-close" type="button">返回当前课程</button>
+      </div>
+    </dialog>
+
     <dialog class="confirm-dialog" id="reset-dialog">
       <form method="dialog">
         <p class="eyebrow">重置学习记录</p>
@@ -129,6 +152,7 @@
     </noscript>
 
     <script src="./assets/progress.js" defer></script>
+    <script src="./assets/roadmap.js" defer></script>
     <script src="./assets/content.js" defer></script>
     <script src="./assets/app.js" defer></script>
   </body>

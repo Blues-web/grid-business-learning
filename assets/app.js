@@ -2,6 +2,7 @@
   "use strict";
 
   const course = window.GRID_COURSE;
+  const roadmap = window.GRID_ROADMAP;
   const Progress = window.LearningProgress;
   const chapters = course.chapters;
   const passScore = Progress.PASS_SCORE;
@@ -22,6 +23,14 @@
     sidebar: document.getElementById("course-sidebar"),
     sidebarScrim: document.getElementById("sidebar-scrim"),
     sidebarClose: document.getElementById("sidebar-close"),
+    stageBadge: document.getElementById("stage-badge"),
+    openRoadmap: document.getElementById("open-roadmap"),
+    closeRoadmap: document.getElementById("close-roadmap"),
+    roadmapDialog: document.getElementById("roadmap-dialog"),
+    roadmapTitle: document.getElementById("roadmap-title"),
+    roadmapSummary: document.getElementById("roadmap-summary"),
+    roadmapContent: document.getElementById("roadmap-content"),
+    roadmapFooterClose: document.getElementById("roadmap-footer-close"),
     resetButton: document.getElementById("reset-progress"),
     resetDialog: document.getElementById("reset-dialog"),
     toast: document.getElementById("toast"),
@@ -65,6 +74,12 @@
 
   function currentChapter() {
     return getChapter(currentChapterNumber) || chapters[0];
+  }
+
+  function stageForChapter(number) {
+    return roadmap.stages.find((stage) =>
+      stage.lessons.some((lesson) => Number(lesson.number) === Number(number)),
+    );
   }
 
   function statusMap() {
@@ -146,9 +161,14 @@
     dom.progressValue.textContent = `${percent}%`;
     dom.mobileProgress.textContent = `${percent}%`;
     dom.progressOrbit.style.setProperty("--progress", `${percent * 3.6}deg`);
+    const readyCount = roadmap.stages.reduce(
+      (count, stage) => count + stage.lessons.filter((lesson) => lesson.chapterId).length,
+      0,
+    );
+    dom.stageBadge.textContent = `已开放 ${readyCount} 讲`;
 
     if (completedCount === chapters.length) {
-      dom.progressNote.textContent = "前三章已完成，可随时复习";
+      dom.progressNote.textContent = "已开放课程已完成，完整路线仍可查看";
     } else {
       const next = statuses.get(Number(currentChapterNumber));
       if (!storageAvailable) {
@@ -178,6 +198,7 @@
 
   function renderChapter() {
     const chapter = currentChapter();
+    const chapterStage = stageForChapter(chapter.id);
     const status = statusMap().get(Number(chapter.id));
     const completion = status.completion;
 
@@ -187,7 +208,7 @@
       <header class="chapter-hero">
         <div class="hero-copy">
           <div class="hero-meta">
-            <span class="stage-pill">${course.meta.stage}</span>
+            <span class="stage-pill">${chapterStage?.title || course.meta.stage}</span>
             <span>第 ${chapter.number} 讲</span>
             <span>${chapter.duration}</span>
           </div>
@@ -266,6 +287,78 @@
     renderQuiz();
     renderCompletionStatus();
     restoreReadingProgress();
+  }
+
+  function renderRoadmap() {
+    const statuses = statusMap();
+    const readyCount = roadmap.stages.reduce(
+      (count, stage) => count + stage.lessons.filter((lesson) => lesson.chapterId).length,
+      0,
+    );
+    const totalLessons = roadmap.stages.reduce(
+      (count, stage) => count + stage.lessons.length,
+      0,
+    );
+
+    dom.roadmapTitle.textContent = roadmap.title;
+    dom.roadmapSummary.textContent = roadmap.summary;
+    dom.openRoadmap.querySelector("small").textContent = `4 阶段 · ${totalLessons} 讲`;
+    dom.stageBadge.textContent = `已开放 ${readyCount} 讲`;
+    dom.roadmapContent.innerHTML = `
+      <section class="roadmap-principles" aria-label="学习原则">
+        <p class="eyebrow">学习原则</p>
+        <div>${roadmap.principles.map((principle) => `<span>${principle}</span>`).join("")}</div>
+      </section>
+      <div class="roadmap-stages">
+        ${roadmap.stages
+          .map(
+            (stage) => `
+              <section class="roadmap-stage" id="roadmap-${stage.id}">
+                <header>
+                  <span class="roadmap-stage-order">${stage.order}</span>
+                  <div>
+                    <p class="eyebrow">阶段 ${stage.order}</p>
+                    <h3>${stage.title}</h3>
+                    <strong>${stage.subtitle}</strong>
+                    <p>${stage.goal}</p>
+                  </div>
+                  <span class="roadmap-stage-count">${stage.lessons.length} 讲</span>
+                </header>
+                <ol class="roadmap-lessons">
+                  ${stage.lessons
+                    .map((lesson) => {
+                      const status = lesson.chapterId
+                        ? statuses.get(Number(lesson.chapterId))
+                        : null;
+                      const stateLabel = status
+                        ? status.status === "completed"
+                          ? "已完成"
+                          : status.status === "available"
+                            ? "可学习"
+                            : "按顺序待学"
+                        : "规划中";
+                      const content = `
+                        <span class="roadmap-lesson-number">${lesson.number}</span>
+                        <span class="roadmap-lesson-main">
+                          <strong>${lesson.title}</strong>
+                          <small>${lesson.goal}</small>
+                          <em>${lesson.keyPoints.join(" · ")}</em>
+                          <i>来源：${lesson.source}</i>
+                        </span>
+                        <span class="roadmap-lesson-status ${status?.status || "planned"}">${stateLabel}</span>
+                      `;
+                      return lesson.chapterId
+                        ? `<li><button type="button" class="roadmap-lesson is-ready" data-roadmap-chapter="${lesson.chapterId}">${content}</button></li>`
+                        : `<li><div class="roadmap-lesson is-planned">${content}</div></li>`;
+                    })
+                    .join("")}
+                </ol>
+              </section>
+            `,
+          )
+          .join("")}
+      </div>
+    `;
   }
 
   function renderQuiz() {
@@ -579,6 +672,17 @@
     dom.menuToggle.setAttribute("aria-expanded", "false");
   }
 
+  function openRoadmap() {
+    renderRoadmap();
+    if (typeof dom.roadmapDialog.showModal === "function") {
+      dom.roadmapDialog.showModal();
+    }
+  }
+
+  function closeRoadmap() {
+    dom.roadmapDialog.close();
+  }
+
   function checkDateRollover() {
     const newToday = Progress.dateKey();
     if (newToday === today) {
@@ -612,6 +716,22 @@
   dom.menuToggle.addEventListener("click", openSidebar);
   dom.sidebarClose.addEventListener("click", closeSidebar);
   dom.sidebarScrim.addEventListener("click", closeSidebar);
+  dom.openRoadmap.addEventListener("click", openRoadmap);
+  dom.closeRoadmap.addEventListener("click", closeRoadmap);
+  dom.roadmapFooterClose.addEventListener("click", closeRoadmap);
+  dom.roadmapDialog.addEventListener("click", (event) => {
+    if (event.target === dom.roadmapDialog) {
+      closeRoadmap();
+    }
+  });
+  dom.roadmapDialog.addEventListener("click", (event) => {
+    const lesson = event.target.closest("[data-roadmap-chapter]");
+    if (!lesson) {
+      return;
+    }
+    closeRoadmap();
+    selectChapter(lesson.dataset.roadmapChapter);
+  });
   dom.resetButton.addEventListener("click", () => dom.resetDialog.showModal());
   dom.resetDialog.addEventListener("close", () => {
     if (dom.resetDialog.returnValue !== "confirm") {
