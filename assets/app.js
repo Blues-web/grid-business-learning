@@ -164,6 +164,7 @@
       0,
     );
     dom.stageBadge.textContent = `已开放 ${readyCount} 讲`;
+    dom.openRoadmap.classList.toggle("is-highlighted", !state.onboardingSeen);
 
     if (completedCount === chapters.length) {
       dom.progressNote.textContent = "课程已全部完成";
@@ -195,6 +196,25 @@
     document.title = `${chapter.number} ${chapter.title}｜电网业务研习室`;
     dom.breadcrumb.textContent = `第${chapter.number}章`;
     dom.chapter.innerHTML = `
+      ${
+        state.onboardingSeen
+          ? ""
+          : `
+            <section class="learning-guide" id="learning-guide" aria-labelledby="learning-guide-title">
+              <div class="learning-guide-mark" aria-hidden="true">01</div>
+              <div class="learning-guide-copy">
+                <p class="eyebrow">第一次使用</p>
+                <h2 id="learning-guide-title">先看完整学习路线，再选择章节</h2>
+                <p>先了解基础业务、现场作业平台、专业微应用和综合实战四个阶段，学习时会更清楚每一讲解决什么问题。</p>
+              </div>
+              <div class="learning-guide-actions">
+                <button class="button button-primary" type="button" data-action="open-roadmap-guide">查看完整学习路线</button>
+                <button class="text-button" type="button" data-action="dismiss-guide">暂不查看</button>
+              </div>
+            </section>
+          `
+      }
+
       <header class="chapter-hero">
         <div class="hero-copy">
           <div class="hero-meta">
@@ -277,7 +297,6 @@
   }
 
   function renderRoadmap() {
-    const statuses = statusMap();
     const readyCount = roadmap.stages.reduce(
       (count, stage) => count + stage.lessons.filter((lesson) => lesson.chapterId).length,
       0,
@@ -292,10 +311,6 @@
     dom.openRoadmap.querySelector("small").textContent = `4 阶段 · ${totalLessons} 讲`;
     dom.stageBadge.textContent = `已开放 ${readyCount} 讲`;
     dom.roadmapContent.innerHTML = `
-      <section class="roadmap-principles" aria-label="学习原则">
-        <p class="eyebrow">学习原则</p>
-        <div>${roadmap.principles.map((principle) => `<span>${principle}</span>`).join("")}</div>
-      </section>
       <div class="roadmap-stages">
         ${roadmap.stages
           .map(
@@ -311,28 +326,6 @@
                   </div>
                   <span class="roadmap-stage-count">${stage.lessons.length} 讲</span>
                 </header>
-                <ol class="roadmap-lessons">
-                  ${stage.lessons
-                    .map((lesson) => {
-                      const status = lesson.chapterId
-                        ? statuses.get(Number(lesson.chapterId))
-                        : null;
-                      const stateLabel =
-                        status?.status === "completed" ? "已完成" : "可学习";
-                      const content = `
-                        <span class="roadmap-lesson-number">${lesson.number}</span>
-                        <span class="roadmap-lesson-main">
-                          <strong>${lesson.title}</strong>
-                          <small>${lesson.goal}</small>
-                          <em>${lesson.keyPoints.join(" · ")}</em>
-                          <i>来源：${lesson.source}</i>
-                        </span>
-                        <span class="roadmap-lesson-status ${status?.status || "available"}">${stateLabel}</span>
-                      `;
-                      return `<li><button type="button" class="roadmap-lesson is-ready" data-roadmap-lesson="${lesson.number}" data-roadmap-chapter="${lesson.chapterId}">${content}</button></li>`;
-                    })
-                    .join("")}
-                </ol>
               </section>
             `,
           )
@@ -651,9 +644,21 @@
 
   function openRoadmap() {
     renderRoadmap();
+    markOnboardingSeen();
     if (typeof dom.roadmapDialog.showModal === "function") {
       dom.roadmapDialog.showModal();
     }
+  }
+
+  function markOnboardingSeen() {
+    if (state.onboardingSeen) {
+      return;
+    }
+
+    state.onboardingSeen = true;
+    saveState();
+    document.getElementById("learning-guide")?.remove();
+    dom.openRoadmap.classList.remove("is-highlighted");
   }
 
   function closeRoadmap() {
@@ -695,17 +700,6 @@
       closeRoadmap();
     }
   });
-  dom.roadmapDialog.addEventListener("click", (event) => {
-    const lesson = event.target.closest("[data-roadmap-lesson]");
-    if (!lesson) {
-      return;
-    }
-    closeRoadmap();
-    const targetChapter = lesson.dataset.roadmapChapter;
-    if (targetChapter) {
-      selectChapter(targetChapter);
-    }
-  });
   dom.resetButton.addEventListener("click", () => dom.resetDialog.showModal());
   dom.resetDialog.addEventListener("close", () => {
     if (dom.resetDialog.returnValue !== "confirm") {
@@ -722,6 +716,18 @@
   });
 
   dom.chapter.addEventListener("click", (event) => {
+    const guideButton = event.target.closest("[data-action='open-roadmap-guide']");
+    if (guideButton) {
+      openRoadmap();
+      return;
+    }
+
+    const dismissGuide = event.target.closest("[data-action='dismiss-guide']");
+    if (dismissGuide) {
+      markOnboardingSeen();
+      return;
+    }
+
     const continueButton = event.target.closest("[data-action='continue-next']");
     if (!continueButton) {
       return;

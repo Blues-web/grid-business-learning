@@ -393,6 +393,12 @@ code {
   background: rgba(208, 238, 118, 0.13);
 }
 
+.roadmap-entry.is-highlighted {
+  border-color: rgba(208, 238, 118, 0.62);
+  background: rgba(208, 238, 118, 0.16);
+  box-shadow: 0 0 0 4px rgba(208, 238, 118, 0.07);
+}
+
 .roadmap-entry strong,
 .roadmap-entry small {
   display: block;
@@ -637,6 +643,60 @@ code {
   margin: 0 auto;
   padding: clamp(32px, 5vw, 68px) 0 80px;
   outline: none;
+}
+
+.learning-guide {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 20px 22px;
+  border: 1px solid rgba(26, 162, 125, 0.28);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(115deg, rgba(214, 244, 232, 0.92), rgba(255, 253, 248, 0.96));
+  box-shadow: 0 12px 32px rgba(20, 80, 66, 0.08);
+}
+
+.learning-guide-mark {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--green-950);
+  background: var(--acid);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.learning-guide-copy .eyebrow {
+  margin-bottom: 4px;
+}
+
+.learning-guide-copy h2 {
+  margin: 0 0 6px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+}
+
+.learning-guide-copy p:last-child {
+  max-width: 720px;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+}
+
+.learning-guide-actions {
+  display: grid;
+  gap: 6px;
+  min-width: 170px;
+}
+
+.learning-guide-actions .text-button {
+  justify-self: center;
 }
 
 .chapter-hero {
@@ -2930,37 +2990,9 @@ code {
   padding: 24px 30px 8px;
 }
 
-.roadmap-principles {
-  margin-bottom: 22px;
-  padding: 18px 20px;
-  border-radius: var(--radius-md);
-  color: var(--white);
-  background: var(--green-950);
-}
-
-.roadmap-principles .eyebrow {
-  color: var(--acid);
-}
-
-.roadmap-principles > div {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px 20px;
-}
-
-.roadmap-principles span {
-  color: rgba(255, 255, 255, 0.66);
-  font-size: 0.75rem;
-}
-
-.roadmap-principles span::before {
-  margin-right: 7px;
-  color: var(--acid);
-  content: "—";
-}
-
 .roadmap-stages {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
 
@@ -2976,8 +3008,8 @@ code {
   grid-template-columns: 54px minmax(0, 1fr) auto;
   gap: 16px;
   align-items: start;
+  height: 100%;
   padding: 20px;
-  border-bottom: 1px solid var(--line);
   background: var(--green-100);
 }
 
@@ -3016,107 +3048,6 @@ code {
   border-radius: 999px;
   color: var(--ink-soft);
   font-size: 0.64rem;
-}
-
-.roadmap-lessons {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.roadmap-lessons li {
-  border-top: 1px solid var(--line);
-}
-
-.roadmap-lessons li:first-child {
-  border-top: 0;
-}
-
-.roadmap-lesson {
-  display: grid;
-  width: 100%;
-  grid-template-columns: 34px minmax(0, 1fr) auto;
-  gap: 12px;
-  align-items: start;
-  padding: 14px 18px;
-  border: 0;
-  color: var(--ink);
-  background: transparent;
-  text-align: left;
-}
-
-button.roadmap-lesson {
-  cursor: pointer;
-}
-
-button.roadmap-lesson:hover {
-  background: rgba(26, 162, 125, 0.07);
-}
-
-.roadmap-lesson-number {
-  display: grid;
-  width: 29px;
-  height: 29px;
-  place-items: center;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  color: var(--green-800);
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-}
-
-.roadmap-lesson-main strong,
-.roadmap-lesson-main small,
-.roadmap-lesson-main em,
-.roadmap-lesson-main i {
-  display: block;
-}
-
-.roadmap-lesson-main strong {
-  font-size: 0.85rem;
-}
-
-.roadmap-lesson-main small {
-  margin-top: 3px;
-  color: var(--ink-soft);
-  font-size: 0.73rem;
-  line-height: 1.5;
-}
-
-.roadmap-lesson-main em {
-  margin-top: 4px;
-  color: var(--green-700);
-  font-size: 0.68rem;
-  font-style: normal;
-}
-
-.roadmap-lesson-main i {
-  margin-top: 3px;
-  color: #7a8c88;
-  font-size: 0.63rem;
-  font-style: normal;
-}
-
-.roadmap-lesson-status {
-  padding: 3px 7px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--ink-soft);
-  font-size: 0.6rem;
-  white-space: nowrap;
-}
-
-.roadmap-lesson-status.completed {
-  color: var(--green-800);
-  border-color: rgba(26, 162, 125, 0.28);
-  background: var(--green-100);
-}
-
-.roadmap-lesson-status.available {
-  color: var(--amber);
-  border-color: rgba(201, 120, 35, 0.28);
-  background: var(--amber-soft);
 }
 
 .roadmap-dialog-footer {
@@ -3373,6 +3304,22 @@ button.roadmap-lesson:hover {
     padding-top: 22px;
   }
 
+  .learning-guide {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .learning-guide-actions {
+    grid-column: 2;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .roadmap-stages {
+    grid-template-columns: 1fr;
+  }
+
   .chapter-hero {
     grid-template-columns: 1fr;
     gap: 30px;
@@ -3413,6 +3360,22 @@ button.roadmap-lesson:hover {
 
   .chapter-shell {
     width: calc(100% - 26px);
+  }
+
+  .learning-guide {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 18px;
+  }
+
+  .learning-guide-mark {
+    width: 42px;
+    height: 42px;
+  }
+
+  .learning-guide-actions {
+    grid-column: auto;
+    grid-template-columns: 1fr;
   }
 
   .chapter-hero {
@@ -3511,10 +3474,6 @@ button.roadmap-lesson:hover {
     gap: 4px;
   }
 
-  .roadmap-principles > div {
-    grid-template-columns: 1fr;
-  }
-
   .roadmap-stage > header {
     grid-template-columns: 42px minmax(0, 1fr);
     padding: 16px;
@@ -3526,16 +3485,6 @@ button.roadmap-lesson:hover {
   }
 
   .roadmap-stage-count {
-    grid-column: 2;
-    justify-self: start;
-  }
-
-  .roadmap-lesson {
-    grid-template-columns: 29px minmax(0, 1fr);
-    padding: 13px 14px;
-  }
-
-  .roadmap-lesson-status {
     grid-column: 2;
     justify-self: start;
   }

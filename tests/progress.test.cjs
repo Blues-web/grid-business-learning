@@ -8,6 +8,7 @@ test("首次打开所有已发布章节都可学习", () => {
   const state = Progress.createDefaultState("2026-11-10");
   const statuses = Progress.chapterStatuses(state, chapters, "2026-11-10");
 
+  assert.equal(state.onboardingSeen, false);
   assert.deepEqual(
     statuses.map((item) => item.status),
     ["available", "available", "available"],
@@ -80,4 +81,27 @@ test("损坏的本地数据会回退到安全初始状态", () => {
     "2026-11-10",
   );
   assert.deepEqual(state, Progress.createDefaultState("2026-11-10"));
+});
+
+test("首次引导状态兼容旧进度并保留已查看状态", () => {
+  const legacyState = Progress.normalizeState(
+    {
+      version: Progress.STATE_VERSION,
+      currentChapter: 3,
+      completed: {},
+      quizDrafts: {},
+      reading: {},
+    },
+    "2026-11-10",
+  );
+  const viewedState = Progress.normalizeState(
+    {
+      ...legacyState,
+      onboardingSeen: true,
+    },
+    "2026-11-10",
+  );
+
+  assert.equal(legacyState.onboardingSeen, false);
+  assert.equal(viewedState.onboardingSeen, true);
 });

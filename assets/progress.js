@@ -41,6 +41,7 @@
       startedAt: today,
       lastActiveDate: today,
       currentChapter: 1,
+      onboardingSeen: false,
       completed: {},
       quizDrafts: {},
       reading: {},
@@ -101,6 +102,7 @@
         Number.isInteger(Number(raw.currentChapter)) && Number(raw.currentChapter) > 0
           ? Number(raw.currentChapter)
           : 1,
+      onboardingSeen: raw.onboardingSeen === true,
       completed,
       quizDrafts,
       reading,
