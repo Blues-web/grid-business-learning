@@ -36,7 +36,7 @@
     <rect x="283" y="132" width="196" height="230" rx="22" fill="#fffdf8" stroke="#d8e1da"/>
     <rect x="504" y="132" width="196" height="230" rx="22" fill="#fffdf8" stroke="#d8e1da"/>
     <rect x="725" y="132" width="196" height="230" rx="22" fill="#fffdf8" stroke="#d8e1da"/>
-    <rect x="946" y="132" width="192" height="230" rx="22" fill="url(#dark)"/>
+    <rect x="946" y="132" width="192" height="280" rx="22" fill="#e8f6f0" stroke="#1aa27d" stroke-width="2"/>
   </g>
 
   <g>
@@ -71,11 +71,11 @@
     <text x="753" y="382" class="stage-copy">通过线路、配变和接入</text><text x="753" y="402" class="stage-copy">设施送到用电现场。</text>
   </g>
   <g>
-    <path d="M1015 286l58-45 58 45v65h-116z" fill="none" stroke="#d0ee76" stroke-width="4" stroke-linejoin="round"/>
-    <path d="M1044 351v-41h27v41M1088 268v-24M1097 244l-18 1" stroke="#fffdf8" stroke-width="4" stroke-linecap="round"/>
-    <rect x="1067" y="301" width="20" height="25" rx="2" fill="#fffdf8"/>
-    <text x="981" y="374" class="tiny" style="fill:#d0ee76">CONSUMPTION</text><text x="995" y="399" class="stage-title" style="fill:#fff">用电</text>
-    <text x="978" y="421" class="stage-copy" style="fill:#b8d4cc">客户设备实际用电，</text><text x="978" y="441" class="stage-copy" style="fill:#b8d4cc">形成用电需求。</text>
+    <path d="M1015 262l58-45 58 45v65h-116z" fill="none" stroke="#075348" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M1044 327v-41h27v41M1088 244v-24M1097 220l-18 1" stroke="#087b60" stroke-width="4" stroke-linecap="round"/>
+    <rect x="1067" y="277" width="20" height="25" rx="2" fill="#0a6653"/>
+    <text x="981" y="338" class="tiny" style="fill:#08735b">CONSUMPTION</text><text x="995" y="362" class="stage-title">用电</text>
+    <text x="978" y="383" class="stage-copy">客户设备实际用电，</text><text x="978" y="403" class="stage-copy">形成用电需求。</text>
   </g>
 
   <g opacity=".75">
@@ -83,18 +83,18 @@
     <path d="M270 241l12 5-12 5M491 241l12 5-12 5M712 241l12 5-12 5M933 241l12 5-12 5" fill="#86a29a"/>
   </g>
 
-  <rect x="62" y="412" width="1076" height="148" rx="24" fill="url(#dark)"/>
-  <text x="88" y="447" class="support-title">三类业务共同支撑</text>
-  <text x="88" y="470" class="support-copy">不要只看物理设备，还要看每类设备处于哪个业务流程中。</text>
+  <rect x="62" y="412" width="1076" height="148" rx="24" fill="#e8f6f0" stroke="#9fcdbd"/>
+  <text x="88" y="447" class="support-title" style="fill:#17302e">三类业务共同支撑</text>
+  <text x="88" y="470" class="support-copy" style="fill:#526764">不要只看物理设备，还要看每类设备处于哪个业务流程中。</text>
   <g>
-    <rect x="90" y="491" width="300" height="46" rx="12" fill="#ffffff" fill-opacity=".055" stroke="#ffffff" stroke-opacity=".1"/>
-    <text x="112" y="519" class="support-title">客户服务</text>
-    <text x="200" y="519" class="support-copy">申请接电、用电变更、费用与服务</text>
-    <rect x="450" y="491" width="300" height="46" rx="12" fill="#ffffff" fill-opacity=".055" stroke="#ffffff" stroke-opacity=".1"/>
-    <text x="472" y="519" class="support-title">计量采集</text>
-    <text x="560" y="519" class="support-copy">现场计量、数据上传与核对</text>
-    <rect x="810" y="491" width="300" height="46" rx="12" fill="#ffffff" fill-opacity=".055" stroke="#ffffff" stroke-opacity=".1"/>
-    <text x="832" y="519" class="support-title">设备运检</text>
-    <text x="920" y="519" class="support-copy">巡视、缺陷、检修与消缺</text>
+    <rect x="90" y="491" width="300" height="46" rx="12" fill="#fffdf8" stroke="#b8d4cc"/>
+    <text x="112" y="519" class="support-title" style="fill:#17302e">客户服务</text>
+    <text x="200" y="519" class="support-copy" style="fill:#526764">申请接电、用电变更、费用与服务</text>
+    <rect x="450" y="491" width="300" height="46" rx="12" fill="#fffdf8" stroke="#b8d4cc"/>
+    <text x="472" y="519" class="support-title" style="fill:#17302e">计量采集</text>
+    <text x="560" y="519" class="support-copy" style="fill:#526764">现场计量、数据上传与核对</text>
+    <rect x="810" y="491" width="300" height="46" rx="12" fill="#fffdf8" stroke="#b8d4cc"/>
+    <text x="832" y="519" class="support-title" style="fill:#17302e">设备运检</text>
+    <text x="920" y="519" class="support-copy" style="fill:#526764">巡视、缺陷、检修与消缺</text>
   </g>
 </svg>

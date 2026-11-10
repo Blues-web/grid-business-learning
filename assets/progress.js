@@ -35,17 +35,6 @@
     );
   }
 
-  function addDays(value, amount) {
-    if (!isValidDateKey(value)) {
-      throw new Error("无效的日期格式");
-    }
-
-    const [year, month, day] = value.split("-").map(Number);
-    const date = new Date(Date.UTC(year, month - 1, day));
-    date.setUTCDate(date.getUTCDate() + amount);
-    return `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())}`;
-  }
-
   function createDefaultState(today = dateKey()) {
     return {
       version: STATE_VERSION,
@@ -126,32 +115,29 @@
       const recordedCompletion = state.completed[chapter.id];
       const previousStatus = index > 0 ? statuses[index - 1] : null;
 
-      // 完成记录只有在前序章节有效完成后才参与解锁，防止本地数据被跳过章节。
+      // 完成记录只有在前序章节有效完成后才生效，保证章节按顺序推进。
       if (recordedCompletion && (index === 0 || previousStatus?.status === "completed")) {
         statuses.push({
           id: chapter.id,
           status: "completed",
-          unlockDate: null,
           completion: recordedCompletion,
         });
         return;
       }
 
       if (index === 0) {
-        statuses.push({ id: chapter.id, status: "available", unlockDate: null });
+        statuses.push({ id: chapter.id, status: "available" });
         return;
       }
 
       if (previousStatus?.status !== "completed") {
-        statuses.push({ id: chapter.id, status: "locked", unlockDate: null, number });
+        statuses.push({ id: chapter.id, status: "locked", number });
         return;
       }
 
-      const unlockDate = addDays(previousStatus.completion.completedAt, 1);
       statuses.push({
         id: chapter.id,
-        status: today >= unlockDate ? "available" : "locked",
-        unlockDate,
+        status: "available",
         number,
       });
     });
@@ -223,18 +209,12 @@
     };
   }
 
-  function unlockDateForNext(state, chapterId) {
-    const completion = state.completed[String(chapterId)];
-    return completion ? addDays(completion.completedAt, 1) : null;
-  }
-
   return {
     STORAGE_KEY,
     STATE_VERSION,
     PASS_SCORE,
     dateKey,
     isValidDateKey,
-    addDays,
     createDefaultState,
     normalizeState,
     chapterStatuses,
@@ -243,6 +223,5 @@
     resolveCurrentChapter,
     quizScore,
     completeChapter,
-    unlockDateForNext,
   };
 });

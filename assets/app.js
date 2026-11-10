@@ -81,9 +81,7 @@
   function selectChapter(number, options = {}) {
     const target = Number(number);
     if (!isAccessible(target)) {
-      const status = statusMap().get(target);
-      const dateText = status?.unlockDate ? `，${status.unlockDate} 解锁` : "";
-      showToast(`本章尚未解锁${dateText}。`, "warning");
+      showToast("请先完成前一章，再学习本章。", "warning");
       return;
     }
 
@@ -128,15 +126,11 @@
 
       const statusIcon =
         status.status === "completed" ? "✓" : status.status === "available" ? "→" : "锁";
-      const unlockText =
-        status.status === "locked" && status.unlockDate ? `<small>${status.unlockDate} 解锁</small>` : "";
-
       button.innerHTML = `
         <span class="course-number">${chapter.number}</span>
         <span class="course-copy">
           <strong>${chapter.title}</strong>
           <small>${chapter.duration}</small>
-          ${unlockText}
         </span>
         <span class="course-status" aria-hidden="true">${statusIcon}</span>
       `;
@@ -160,10 +154,14 @@
       if (!storageAvailable) {
         dom.progressNote.textContent = "当前浏览器无法保存进度";
       } else if (next?.status === "completed") {
-        const unlockDate = Progress.unlockDateForNext(state, currentChapterNumber);
-        dom.progressNote.textContent = unlockDate ? `${unlockDate} 自动进入下一章` : "本章已完成";
+        const following = chapters.find(
+          (chapter) => Number(chapter.id) === Number(currentChapterNumber) + 1,
+        );
+        dom.progressNote.textContent = following
+          ? `第${following.number}章已解锁，可立即继续`
+          : "章节已完成，可随时复习";
       } else {
-        dom.progressNote.textContent = "完成本章测验后进入每日节奏";
+        dom.progressNote.textContent = "完成本章测验后立即开放下一章";
       }
     }
   }
@@ -175,7 +173,7 @@
     if (status.status === "available") {
       return "可学习";
     }
-    return status.unlockDate ? `锁定，${status.unlockDate} 解锁` : "锁定，请先完成前一章";
+    return "锁定，请先完成前一章";
   }
 
   function renderChapter() {
@@ -411,7 +409,7 @@
           <strong>${quizResult.score} / ${chapter.quiz.length}</strong>
         </div>
         <div class="quiz-actions">
-          <p>${passed ? "下一章将在完成后的次日自动解锁。" : `至少答对 ${passScore} 题。建议复习对应知识后再试一次。`}</p>
+          <p>${passed ? "下一章已解锁，可立即继续。" : `至少答对 ${passScore} 题。建议复习对应知识后再试一次。`}</p>
           <button class="button button-secondary" type="button" data-action="retry-quiz">重新作答</button>
         </div>
       `;
@@ -450,7 +448,7 @@
       const firstCompletion = !state.completed[chapter.id];
       state = Progress.completeChapter(state, chapter.id, score, chapter.quiz.length, today);
       saveState();
-      showToast(firstCompletion ? "本章已完成，下一章节奏已安排。" : "测验结果已保存。", "success");
+      showToast(firstCompletion ? "本章已完成，下一章已立即开放。" : "测验结果已保存。", "success");
     } else {
       showToast("本章尚未完成，请查看解析后重新作答。", "warning");
     }
@@ -489,21 +487,24 @@
       element.innerHTML = `
         <div class="completion-icon">日</div>
         <div>
-          <p class="eyebrow">每日学习节奏</p>
-          <h3>完成本章后，下一章将在次日自动开放</h3>
-          <p>进度保存在当前浏览器。保持连续阅读可以形成稳定的业务知识体系。</p>
+          <p class="eyebrow">学习进度</p>
+          <h3>完成本章测验后，下一章立即开放</h3>
+          <p>不限制学习时间。你可以连续学习，也可以随时回到已完成章节复习。</p>
         </div>
       `;
       return;
     }
 
-    const unlockDate = nextChapter ? Progress.unlockDateForNext(state, chapter.id) : null;
     const nextStatus = nextChapter ? statusMap().get(Number(nextChapter.id)) : null;
     const nextText = !nextChapter
       ? "当前版本的三章学习已完成。后续版本将继续扩展配电与台区课程。"
       : nextStatus?.status === "available"
-        ? `第${nextChapter.number}章已解锁，可随时开始。`
-        : `第${nextChapter.number}章将在 ${unlockDate} 自动解锁。`;
+        ? `第${nextChapter.number}章已解锁，不需要等待第二天。`
+        : "";
+    const nextAction =
+      nextChapter && nextStatus?.status === "available"
+        ? `<button class="button button-primary completion-next" type="button" data-action="continue-next" data-chapter="${nextChapter.id}">继续学习第${nextChapter.number}章</button>`
+        : "";
 
     element.className = "completion-status is-complete";
     element.innerHTML = `
@@ -512,6 +513,7 @@
         <p class="eyebrow">完成记录</p>
         <h3>本章已于 ${completion.completedAt} 完成，测验 ${completion.score}/${completion.total}</h3>
         <p>${nextText}</p>
+        ${nextAction}
       </div>
     `;
   }
@@ -623,6 +625,14 @@
     renderAll();
     window.scrollTo({ top: 0, behavior: "smooth" });
     showToast("本机学习进度已重置。", "success");
+  });
+
+  dom.chapter.addEventListener("click", (event) => {
+    const continueButton = event.target.closest("[data-action='continue-next']");
+    if (!continueButton) {
+      return;
+    }
+    selectChapter(continueButton.dataset.chapter);
   });
 
   window.addEventListener("scroll", requestReadingUpdate, { passive: true });

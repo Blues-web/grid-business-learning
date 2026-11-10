@@ -83,16 +83,16 @@
   </g>
 
   <g transform="translate(878 178)">
-    <path d="M0 0h86v282h-86z" fill="#073f37" rx="16"/>
-    <text x="16" y="34" class="lbl" style="fill:#d0ee76">研发理解</text>
-    <text x="16" y="67" class="note" style="fill:#ffffff">箱内不是“一堆</text>
-    <text x="16" y="87" class="note" style="fill:#ffffff">编号”，而是从</text>
-    <text x="16" y="107" class="note" style="fill:#ffffff">进线、计量、</text>
-    <text x="16" y="127" class="note" style="fill:#ffffff">采集到封印</text>
-    <text x="16" y="147" class="note" style="fill:#ffffff">的一条现场</text>
-    <text x="16" y="167" class="note" style="fill:#ffffff">证据链。</text>
-    <text x="16" y="211" class="note" style="fill:#b8d4cc">先认对象，</text>
-    <text x="16" y="231" class="note" style="fill:#b8d4cc">再问它的</text>
-    <text x="16" y="251" class="note" style="fill:#b8d4cc">业务作用。</text>
+    <rect x="0" y="0" width="142" height="282" rx="16" fill="#e8f6f0" stroke="#a7d0c2"/>
+    <text x="16" y="34" class="lbl">研发理解</text>
+    <text x="16" y="67" class="note">箱内不是“一堆</text>
+    <text x="16" y="87" class="note">编号”，而是从</text>
+    <text x="16" y="107" class="note">进线、计量、</text>
+    <text x="16" y="127" class="note">采集到封印</text>
+    <text x="16" y="147" class="note">的一条现场</text>
+    <text x="16" y="167" class="note">证据链。</text>
+    <text x="16" y="211" class="note">先认对象，</text>
+    <text x="16" y="231" class="note">再问它的</text>
+    <text x="16" y="251" class="note">业务作用。</text>
   </g>
 </svg>

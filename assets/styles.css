@@ -2468,6 +2468,10 @@ code {
   font-size: 0.76rem;
 }
 
+.completion-next {
+  margin-top: 12px;
+}
+
 .next-card {
   position: relative;
   overflow: hidden;

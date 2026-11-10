@@ -24,7 +24,7 @@
     <path d="M56 151l69-35 69 35" fill="#0d6957"/>
     <path d="M84 169h25v24H84zM111 169h25v24h-25zM138 169h25v24h-25z" fill="#fffdf8" stroke="#9db2aa"/>
     <path d="M100 221v29M125 221v29M150 221v29" stroke="#d0ee76" stroke-width="4"/>
-    <text x="83" y="255" class="lbl" style="fill:#fff">变电站</text>
+    <text x="83" y="256" class="lbl" style="fill:#fff;font-size:18px">变电站</text>
   </g>
 
   <path d="M196 199H356" stroke="#c97823" stroke-width="7" stroke-linecap="round"/>
