@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 require("../assets/roadmap.js");
+require("../assets/business-maps.js");
 require("../assets/lesson-details.js");
 require("../assets/content.js");
 

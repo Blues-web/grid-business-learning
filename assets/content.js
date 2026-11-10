@@ -5,7 +5,7 @@
     meta: {
       title: "国家电网业务知识体系",
       stage: "基础电力业务",
-      version: "v2.0",
+      version: "v2.1",
       updatedAt: "2026-11-10",
     },
     chapters: [
@@ -993,7 +993,7 @@
               </div>
               <div class="callout callout-green">
                 <strong>先建立关系，再看页面。</strong>
-                <p>装备主人、计量箱建档、空间拓扑、缺陷整改等内容会在后续专业应用阶段展开。这里先学会识别“这是哪类对象、它与谁相连、业务上代表什么”。</p>
+              <p>设备主人、计量箱建档、空间拓扑、缺陷整改等内容会在后续专业应用阶段展开。这里先学会识别“这是哪类对象、它与谁相连、业务上代表什么”。</p>
               </div>
             `,
           },
@@ -1095,25 +1095,34 @@
   const buildGeneratedChapter = (lesson, index) => {
     const detail = lessonDetails[lesson.number];
     const nextLesson = roadmapLessons[index + 1];
+    const conceptNames = detail.concepts.map(([name]) => name);
+    const coreDefinition =
+      detail.coreDefinition ||
+      `本章围绕${conceptNames.join("、")}展开，需要先分清对象和业务边界，再判断现场事实与系统结果是否一致。`;
+    const judgment =
+      detail.judgment ||
+      "先确认业务对象、事实来源和责任范围，再核对处理结果能否被下游接受；不能只凭页面状态判断完成。";
     const learningObjectives =
       detail.learningObjectives ||
-      lesson.keyPoints.map(
-        (point) => `掌握“${point}”的业务含义及判断方法。`,
-      );
+      [
+        lesson.goal,
+        `能区分${conceptNames.join("、")}，并说明它们在一次业务中的作用。`,
+        "能用“对象、事实、责任、结果、异常”检查本章案例。",
+      ];
     const chapterObjectives = detail.chapterObjectives || [
       lesson.goal,
-      `能说明“${lesson.keyPoints[0]}”在业务中的作用。`,
-      "能识别本讲常见异常，并知道下一步交给谁处理。",
+      `能说明${conceptNames[0]}与${conceptNames[1] || "相关业务"}的边界。`,
+      `能依据本章判断原则检查业务是否形成闭环。`,
     ];
     const otherLessons = roadmapLessons.filter((item) => item.number !== lesson.number);
     const discourage = (offset) => otherLessons[(index + offset) % otherLessons.length];
     const question1Wrong = [discourage(1), discourage(2), discourage(3)];
-    const question2Wrong = [
-      discourage(4).keyPoints[0],
-      discourage(5).keyPoints[1],
-      discourage(6).keyPoints[2],
-    ];
-    const processWrong = detail.process.slice(1, 4);
+    const question2Wrong = [discourage(4), discourage(5), discourage(6)].map((item) => {
+      const otherDetail = lessonDetails[item.number];
+      return otherDetail
+        ? otherDetail.concepts.slice(0, 3).map(([name]) => name).join("、")
+        : item.keyPoints.join("、");
+    });
     const conceptCards = detail.concepts
       .map(
         ([name, explanation, impact]) => `
@@ -1126,34 +1135,60 @@
       )
       .join("");
     const processNotes = detail.processNotes || [];
+    // 未单独编写说明时，用业务动作类型生成可判断的步骤解释，避免占位文案进入课程。
+    const describeProcessStep = (step, stepIndex) => {
+      if (processNotes[stepIndex]) {
+        return processNotes[stepIndex];
+      }
+      if (stepIndex === 0) {
+        return `先核对“${step}”所需的业务来源、具体对象和前置条件，不能带着未核实的信息进入下一步。`;
+      }
+      if (/确认|核对|判断|识别|检查|查询/.test(step)) {
+        return `把${conceptNames.join("、")}与任务、现场和当前状态相互核对；出现不一致时保留事实和证据。`;
+      }
+      if (/拍照|记录|证据|材料/.test(step)) {
+        return "记录必须对应具体任务、对象和时间，能够说明现场发生了什么以及结果是否满足要求。";
+      }
+      if (/派|安排|配置|接收|领取|接单/.test(step)) {
+        return "人员、责任范围、资格和时间要求必须匹配，并让接收方明确后续动作。";
+      }
+      if (/提交|反馈|归档|上传|保存/.test(step)) {
+        return "以结果可追溯、下游能够接收为准，不以页面点击成功或本地暂存作为业务完成。";
+      }
+      return "确认本步骤的输入、责任和输出后再进入下一步；条件不具备时应记录原因和恢复条件。";
+    };
     const stepItems = detail.process
       .map(
         (step, stepIndex) =>
-          `<li><b>${step}</b><span>${processNotes[stepIndex] || "按要求完成本环节并留下必要的业务结果。"}</span></li>`,
+          `<li><b>${step}</b><span>${describeProcessStep(step, stepIndex)}</span></li>`,
       )
       .join("");
     const devQuestionNotes = detail.devQuestionNotes || [];
+    const describeDevQuestion = (questionIndex) => {
+      if (devQuestionNotes[questionIndex]) {
+        return devQuestionNotes[questionIndex];
+      }
+      if (questionIndex === 0 && detail.pitfalls[0]) {
+        return `出现“${detail.pitfalls[0]}”说明判断尚未闭环；应回到具体对象、事实来源和责任范围核实。`;
+      }
+      if (questionIndex === 1 && detail.pitfalls[1]) {
+        return `避免“${detail.pitfalls[1]}”，并确认处理结果能够被后续业务使用。`;
+      }
+      return `最终检查标准是：${judgment}`;
+    };
     const questionCards = detail.devQuestions
       .map(
         (question, questionIndex) =>
-          `<article><span>${String(questionIndex + 1).padStart(2, "0")}</span><h3>${question}</h3><p>${devQuestionNotes[questionIndex] || "先从业务目的和对象关系出发，再进入页面与操作。"}</p></article>`,
+          `<article><span>${String(questionIndex + 1).padStart(2, "0")}</span><h3>${question}</h3><p>${describeDevQuestion(questionIndex)}</p></article>`,
       )
       .join("");
     const pitfalls = detail.pitfalls.map((item) => `<li>${item}</li>`).join("");
 
-    return {
-      id: String(Number(lesson.number)),
-      number: lesson.number,
-      title: lesson.title,
-      subtitle: lesson.goal,
-      duration: "约 12 分钟",
-      tags: lesson.keyPoints,
-      objectives: chapterObjectives,
-      sections: [
+    const sections = [
         {
           id: "goals",
           short: "目标",
-          title: "1. 本节学习目标",
+          title: "本节学习目标",
           html: `
             <div class="objective-grid">
               ${learningObjectives
@@ -1172,23 +1207,31 @@
         {
           id: "background",
           short: "背景",
-          title: "2. 业务背景",
-            html: detail.backgroundHtml || `<p>${detail.background}</p>`,
+          title: "业务背景",
+          html:
+            detail.backgroundHtml ||
+            `
+              <div class="callout callout-green">
+                <strong>一句话理解</strong>
+                <p>${coreDefinition}</p>
+              </div>
+              <p>${detail.background}</p>
+            `,
         },
         {
           id: "concepts",
           short: "概念",
-          title: "3. 核心概念",
+          title: "核心概念",
           html: `<div class="concept-list">${conceptCards}</div>`,
         },
         {
           id: "objects",
           short: "对象",
-          title: "4. 业务对象及关系",
-            html:
-              detail.objectsHtml ||
-              `
-            <p>本讲主要围绕 ${detail.concepts.map(([name]) => name).join("、")} 展开。对象之间不是简单的上下级关系，需要结合业务来源、现场位置和当前处理状态理解。</p>
+          title: "业务对象及关系",
+          html:
+            detail.objectsHtml ||
+            `
+            <p>本讲需要把 ${conceptNames.join("、")} 放在同一条业务链上理解：先确认对象是什么，再确认谁依据哪些资料处理，最后检查结果反馈给谁。</p>
             <div class="plain-term-grid">
               ${detail.concepts
                 .map(
@@ -1202,13 +1245,13 @@
         {
           id: "process",
           short: "流程",
-          title: "5. 业务流程",
+          title: "业务流程",
           html: `<ol class="step-list">${stepItems}</ol>`,
         },
         {
           id: "project-case",
           short: "案例",
-          title: "6. 业务案例",
+          title: "业务案例",
             html:
               detail.caseHtml ||
               `
@@ -1226,7 +1269,7 @@
         {
           id: "software",
           short: "业务理解",
-          title: "7. 研发理解要点",
+          title: "研发理解要点",
           html: `
             <p>阅读页面或需求时，先回答下面三个问题，再考虑具体功能。</p>
             <div class="business-question-grid">${questionCards}</div>
@@ -1239,33 +1282,56 @@
         {
           id: "summary",
           short: "总结",
-          title: "8. 本节总结",
-            html:
-              (detail.summary &&
-                `<div class="takeaway-list">${detail.summary
-                  .map(
-                    (item, summaryIndex) =>
-                      `<div><span>${summaryIndex + 1}</span><p>${item}</p></div>`,
-                  )
-                  .join("")}</div>`) ||
-              `
+          title: "本节总结",
+          html: `
             <div class="takeaway-list">
-              ${lesson.keyPoints
+              ${(detail.summary || [
+                ...detail.concepts.map(
+                  ([name, explanation, impact]) =>
+                    `${name}：${explanation} 业务影响是：${impact}`,
+                ),
+                `本章判断原则：${judgment}`,
+              ])
                 .map(
-                  (point, pointIndex) =>
-                    `<div><span>${pointIndex + 1}</span><p>${point}：理解其业务目的、关联对象和异常影响。</p></div>`,
+                  (item, summaryIndex) =>
+                    `<div><span>${summaryIndex + 1}</span><p>${item}</p></div>`,
                 )
                 .join("")}
             </div>
           `,
         },
-      ],
+    ];
+
+    // 平台与微应用章节额外展示完整业务模块清单，帮助读者先建立业务全貌。
+    if (detail.moduleDirectoryHtml) {
+      sections.splice(2, 0, {
+        id: "modules",
+        short: "模块",
+        title: "业务模块清单",
+        html: detail.moduleDirectoryHtml,
+      });
+    }
+
+    // 章节编号由实际区段数量生成，避免不同章节插入模块清单后出现重号。
+    sections.forEach((section, sectionIndex) => {
+      section.title = `${sectionIndex + 1}. ${section.title}`;
+    });
+
+    return {
+      id: String(Number(lesson.number)),
+      number: lesson.number,
+      title: lesson.title,
+      subtitle: lesson.goal,
+      duration: "约 12 分钟",
+      tags: lesson.keyPoints,
+      objectives: chapterObjectives,
+      sections,
       quiz:
         detail.quiz ||
         [
         {
           id: `${lesson.number}-q1`,
-          question: "本讲主要希望研发理解什么？",
+          question: "以下哪项最符合本讲的核心业务目的？",
           options: [lesson.goal, ...question1Wrong.map((item) => item.goal)],
           correct: 0,
           explanation: `本讲核心目标是：${lesson.goal}`,
@@ -1278,28 +1344,28 @@
         },
         {
           id: `${lesson.number}-q2`,
-          question: "以下哪一项属于本讲的关键业务知识？",
-          options: [lesson.keyPoints[0], ...question2Wrong],
+          question: "本讲最需要核对的业务对象或关系是哪一组？",
+          options: [conceptNames.join("、"), ...question2Wrong],
           correct: 0,
-          explanation: `${lesson.keyPoints[0]} 是本讲需要理解的核心知识点。`,
+          explanation: `本章围绕${conceptNames.join("、")}展开；先分清这些对象和关系，才能判断业务事实与处理结果。`,
           optionNotes: [
-            "正确答案：与本讲关键知识一致。",
-            "该知识点属于其他课程。",
-            "该知识点属于其他课程。",
-            "该知识点属于其他课程。",
+            "正确答案：与本讲核心对象和关系一致。",
+            "该组对象属于其他课程，不是本讲首要核对关系。",
+            "该组对象属于其他课程，不是本讲首要核对关系。",
+            "该组对象属于其他课程，不是本讲首要核对关系。",
           ],
         },
         {
           id: `${lesson.number}-q3`,
-          question: "处理本讲业务时，较合理的第一步是什么？",
-          options: [detail.process[0], ...processWrong],
+          question: "怎样判断本讲业务已经真正形成闭环？",
+          options: [judgment, ...detail.pitfalls.slice(0, 2), "当前页面显示“完成”即可"],
           correct: 0,
-          explanation: `应先完成“${detail.process[0]}”，再根据业务结果进入后续环节。`,
+          explanation: `完成状态不能只看当前页面。${judgment}`,
           optionNotes: [
-            "正确答案：符合本讲业务流程顺序。",
-            "该步骤应在确认前置条件之后进行。",
-            "该步骤应在确认前置条件之后进行。",
-            "该步骤应在确认前置条件之后进行。",
+            "正确答案：同时覆盖对象、事实、责任、结果和下游反馈。",
+            "这是本讲应避免的误区。",
+            "这是本讲应避免的误区。",
+            "页面状态只是操作结果，不能替代业务闭环。",
           ],
         },
         ],

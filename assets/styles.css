@@ -233,12 +233,44 @@ code {
 
 .sidebar-close {
   display: none;
-  margin-top: -7px;
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  place-items: center;
+  margin-top: -4px;
+  padding: 0;
   border: 0;
   color: rgba(255, 255, 255, 0.72);
   background: none;
-  font-size: 1.9rem;
+  font-size: 0;
+  line-height: 1;
   cursor: pointer;
+}
+
+/* 用几何线条绘制关闭图标，避免字符字体的上下留白造成视觉偏移。 */
+.sidebar-close::before,
+.sidebar-close::after,
+.roadmap-close::before,
+.roadmap-close::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 1.5px;
+  border-radius: 999px;
+  background: currentColor;
+  content: "";
+}
+
+.sidebar-close::before,
+.roadmap-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.sidebar-close::after,
+.roadmap-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .progress-overview {
@@ -333,6 +365,7 @@ code {
 
 .course-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 8px;
   margin: 0;
   padding: 0;
@@ -385,6 +418,7 @@ code {
 .course-item {
   display: grid;
   width: 100%;
+  min-width: 0;
   grid-template-columns: 30px 1fr 24px;
   gap: 10px;
   align-items: center;
@@ -440,6 +474,10 @@ code {
   display: block;
 }
 
+.course-copy {
+  min-width: 0;
+}
+
 .course-copy strong {
   overflow: hidden;
   font-size: 0.84rem;
@@ -459,9 +497,14 @@ code {
 }
 
 .course-status {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
   color: rgba(255, 255, 255, 0.52);
   font-family: var(--font-mono);
   font-size: 0.7rem;
+  line-height: 1;
   text-align: center;
 }
 
@@ -781,9 +824,6 @@ code {
 }
 
 .lesson-section {
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  gap: clamp(16px, 3vw, 32px);
   padding: 54px 0;
   border-top: 1px solid var(--line);
   scroll-margin-top: 122px;
@@ -791,20 +831,6 @@ code {
 
 .lesson-section:first-child {
   border-top: 0;
-}
-
-.section-index {
-  display: flex;
-  height: 42px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--line-strong);
-  border-radius: 50%;
-  color: var(--green-800);
-  background: var(--surface);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 700;
 }
 
 .section-content {
@@ -2884,16 +2910,19 @@ code {
 }
 
 .roadmap-close {
+  position: relative;
   display: grid;
   width: 36px;
   height: 36px;
   flex: 0 0 36px;
   place-items: center;
+  padding: 0;
   border: 1px solid var(--line);
   border-radius: 50%;
   color: var(--ink);
   background: var(--surface);
-  font-size: 1.3rem;
+  font-size: 0;
+  line-height: 1;
   cursor: pointer;
 }
 
@@ -3293,7 +3322,7 @@ button.roadmap-lesson:hover {
   }
 
   .sidebar-close {
-    display: block;
+    display: grid;
   }
 
   .roadmap-dialog {
@@ -3414,15 +3443,7 @@ button.roadmap-lesson:hover {
   }
 
   .lesson-section {
-    grid-template-columns: 35px minmax(0, 1fr);
-    gap: 13px;
     padding: 40px 0;
-  }
-
-  .section-index {
-    width: 32px;
-    height: 32px;
-    font-size: 0.55rem;
   }
 
   .section-content > h2 {

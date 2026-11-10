@@ -166,12 +166,12 @@
     dom.stageBadge.textContent = `已开放 ${readyCount} 讲`;
 
     if (completedCount === chapters.length) {
-      dom.progressNote.textContent = "已开放课程已完成，可自由复习";
+      dom.progressNote.textContent = "课程已全部完成";
     } else {
       if (!storageAvailable) {
         dom.progressNote.textContent = "当前浏览器无法保存进度";
       } else {
-        dom.progressNote.textContent = "32 讲均可自由查看";
+        dom.progressNote.textContent = "";
       }
     }
   }
@@ -235,7 +235,6 @@
           .map(
             (section) => `
               <section class="lesson-section" id="section-${chapter.id}-${section.id}">
-                <div class="section-index">${section.title.split(".")[0].padStart(2, "0")}</div>
                 <div class="section-content">
                   <h2>${section.title}</h2>
                   ${section.html}
@@ -246,7 +245,6 @@
           .join("")}
 
         <section class="lesson-section quiz-section" id="quiz-${chapter.id}">
-          <div class="section-index">Q</div>
           <div class="section-content">
             <div class="quiz-heading">
               <div>
@@ -260,7 +258,6 @@
         </section>
 
         <section class="lesson-section" id="section-${chapter.id}-next">
-          <div class="section-index">→</div>
           <div class="section-content">
             <div class="completion-status" id="completion-status"></div>
             <div class="next-card">
@@ -485,7 +482,7 @@
           <strong>${quizResult.score} / ${chapter.quiz.length}</strong>
         </div>
         <div class="quiz-actions">
-          <p>${passed ? "本章已完成，可自由查看其他课程。" : `至少答对 ${passScore} 题。建议复习对应知识后再试一次。`}</p>
+          <p>${passed ? "本章已完成。" : `至少答对 ${passScore} 题。建议复习对应知识后再试一次。`}</p>
           <button class="button button-secondary" type="button" data-action="retry-quiz">重新作答</button>
         </div>
       `;
@@ -524,7 +521,7 @@
       const firstCompletion = !state.completed[chapter.id];
       state = Progress.completeChapter(state, chapter.id, score, chapter.quiz.length, today);
       saveState();
-      showToast(firstCompletion ? "本章已完成，可自由查看其他课程。" : "测验结果已保存。", "success");
+      showToast(firstCompletion ? "本章已完成。" : "测验结果已保存。", "success");
     } else {
       showToast("本章尚未完成，请查看解析后重新作答。", "warning");
     }
@@ -564,16 +561,16 @@
         <div class="completion-icon">日</div>
         <div>
           <p class="eyebrow">学习进度</p>
-          <h3>所有课程均可自由查看</h3>
-          <p>完成测验只用于记录掌握情况，不限制课程访问顺序。</p>
+          <h3>本章学习进度</h3>
+          <p>完成测验用于记录本章掌握情况。</p>
         </div>
       `;
       return;
     }
 
     const nextText = !nextChapter
-      ? "32 讲学习路线已全部完成，可以继续复习或结合实际项目回看重点章节。"
-      : `你可以继续第${nextChapter.number}章，也可以自由查看其他课程。`;
+      ? "32 讲学习路线已全部完成。"
+      : `你可以继续学习第${nextChapter.number}章。`;
     const nextAction =
       nextChapter
         ? `<button class="button button-primary completion-next" type="button" data-action="continue-next" data-chapter="${nextChapter.id}">继续学习第${nextChapter.number}章</button>`
