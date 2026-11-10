@@ -2058,6 +2058,75 @@ code {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.real-device-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 24px 0 26px;
+}
+
+.device-photo-card {
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: 0 12px 36px rgba(22, 58, 51, 0.08);
+}
+
+.device-photo-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center;
+  background: var(--paper-2);
+}
+
+.device-photo-card figcaption {
+  padding: 16px 17px 17px;
+}
+
+.device-photo-card figcaption > span {
+  color: var(--green-700);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.device-photo-card figcaption > strong {
+  display: block;
+  margin-top: 5px;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+}
+
+.device-photo-card figcaption > p {
+  margin: 7px 0 11px;
+  color: var(--ink-soft);
+  font-size: 0.77rem;
+}
+
+.device-photo-card figcaption > a {
+  color: var(--green-700);
+  font-size: 0.66rem;
+  text-decoration-color: rgba(8, 123, 96, 0.3);
+}
+
+.device-photo-card:nth-child(2) img {
+  object-position: center 62%;
+}
+
+.device-photo-card:nth-child(4) img {
+  object-position: center 42%;
+}
+
+.device-photo-card:nth-child(5) img {
+  object-position: center 52%;
+}
+
 .device-business-map > div {
   border-top: 3px solid var(--green-500);
   border-radius: 0 0 var(--radius-md) var(--radius-md);
@@ -2917,6 +2986,7 @@ code {
   .relation-grid,
   .project-pair,
   .project-scene-list,
+  .real-device-gallery,
   .guideline-grid,
   .topology-branch,
   .inspection-flow,

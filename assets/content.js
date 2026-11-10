@@ -813,15 +813,76 @@
             short: "设备",
             title: "4. 现场设备怎么认",
             html: `
-              <p>研发不可能记住每台设备的具体型号，但应该能根据外形、所在位置和业务名称判断它大致属于哪一类设备。</p>
-              <figure class="lesson-figure lesson-figure-wide">
-                <img src="./assets/images/device-gallery.svg" alt="配电变压器、环网柜、开关柜、电缆分支箱、计量箱、智能电能表和采集终端示意" />
-                <figcaption>图 3-1　现场设备识别图册：配变负责降压，开关设备负责分接与联络，计量箱承载表计，终端负责上传数据。</figcaption>
-              </figure>
+              <p>研发不可能记住每台设备的具体型号，但应该能根据外形、所在位置和业务名称判断它大致属于哪一类设备。下面是真实设备照片，型号、安装方式和地区外观会存在差异。</p>
+              <div class="real-device-gallery">
+                <figure class="device-photo-card">
+                  <img src="./assets/images/real/distribution-transformer.jpg" alt="杆上安装的配电变压器、绝缘子和中压线路实拍" loading="lazy" />
+                  <figcaption>
+                    <span>01 · 配电变压器</span>
+                    <strong>把中压降到低压</strong>
+                    <p>常安装在电线杆、台架或配电室内。照片中白色圆筒状设备是杆上变压器。</p>
+                    <a href="https://commons.wikimedia.org/wiki/File:Utility_pole_with_transformer_and_power_lines.jpg" target="_blank" rel="noreferrer">照片：Candeadly / CC BY 4.0</a>
+                  </figcaption>
+                </figure>
+                <figure class="device-photo-card">
+                  <img src="./assets/images/real/switchgear.jpg" alt="配电变电站内的开关设备和变压器实拍" loading="lazy" />
+                  <figcaption>
+                    <span>02 · 开关设备区域</span>
+                    <strong>控制线路通断和转供</strong>
+                    <p>照片展示配电变电站的开关设备和变压器，不特指某一个开关柜型号。</p>
+                    <a href="https://commons.wikimedia.org/wiki/File:Distribution_substation_switchgear.jpg" target="_blank" rel="noreferrer">照片：Rsparks3 / CC0</a>
+                  </figcaption>
+                </figure>
+                <figure class="device-photo-card">
+                  <img src="./assets/images/real/distribution-box.jpg" alt="户外橙色配电箱实拍，箱体外接电缆" loading="lazy" />
+                  <figcaption>
+                    <span>03 · 配电箱</span>
+                    <strong>现场分配和转接电能</strong>
+                    <p>配电箱用途和外形差异很大。照片是户外用电场景，不能代表所有电缆分支箱。</p>
+                    <a href="https://commons.wikimedia.org/wiki/File:Distribution_box.jpg" target="_blank" rel="noreferrer">照片：Fumikas Sagisavas / CC0</a>
+                  </figcaption>
+                </figure>
+                <figure class="device-photo-card">
+                  <img src="./assets/images/real/meter-cabinet.jpg" alt="户外杆上安装的多个电能表计量箱实拍" loading="lazy" />
+                  <figcaption>
+                    <span>04 · 户外计量表箱</span>
+                    <strong>集中安装电能表</strong>
+                    <p>图中可以看到多个表位、进线和出线。不同地区有楼内、户外、落地式等多种表箱。</p>
+                    <a href="https://commons.wikimedia.org/wiki/File:Electricity_meters_inside_metering_cubicles,_Hong_Kong.jpg" target="_blank" rel="noreferrer">照片：Mk2010 / CC BY-SA 3.0</a>
+                  </figcaption>
+                </figure>
+                <figure class="device-photo-card">
+                  <img src="./assets/images/real/smart-meter.jpg" alt="墙面安装的带绿色液晶屏智能电能表实拍" loading="lazy" />
+                  <figcaption>
+                    <span>05 · 智能电能表</span>
+                    <strong>记录并显示用电量</strong>
+                    <p>照片能直观看到显示屏、表壳、接线和保护盖。现场还要核对表号、铭牌和封印。</p>
+                    <a href="https://commons.wikimedia.org/wiki/File:Smart_Electrical_Meter.jpg" target="_blank" rel="noreferrer">照片：Aliva Sahoo / CC BY-SA 4.0</a>
+                  </figcaption>
+                </figure>
+                <figure class="device-photo-card">
+                  <img src="./assets/images/real/current-transformer.jpg" alt="三相电缆穿过三个环形电流互感器的实拍" loading="lazy" />
+                  <figcaption>
+                    <span>06 · 电流互感器 CT</span>
+                    <strong>把大电流缩小给电能表</strong>
+                    <p>照片中的环形设备套在三相电缆上，用来感知一次侧电流并按变比输出二次侧信号。</p>
+                    <a href="https://commons.wikimedia.org/wiki/File:CurrentTransformers.jpg" target="_blank" rel="noreferrer">照片：Ali@gwc.org.uk / CC BY-SA 2.5</a>
+                  </figcaption>
+                </figure>
+                <figure class="device-photo-card">
+                  <img src="./assets/images/real/remote-terminal-unit.jpg" alt="多模块远程终端单元RTU实拍，带网口、串口和接线端子" loading="lazy" />
+                  <figcaption>
+                    <span>07 · 远程终端单元</span>
+                    <strong>采集现场信号并上传</strong>
+                    <p>图中是模块化 RTU，可接入数字量、模拟量和通信线路。实际采集终端或集中器外形可能不同。</p>
+                    <a href="https://commons.wikimedia.org/wiki/File:Remote_Terminal_Unit_Modular.jpg" target="_blank" rel="noreferrer">照片：FernaCM / CC BY-SA 4.0</a>
+                  </figcaption>
+                </figure>
+              </div>
               <div class="device-business-map">
                 <div><span>配变</span><p>理解台区范围、供电能力和低压用户规模。</p></div>
-                <div><span>开关 / 环网柜</span><p>理解故障隔离、负荷转供和停电影响范围。</p></div>
-                <div><span>分支箱</span><p>理解线路从哪里分叉，计量箱挂接到哪个节点。</p></div>
+                <div><span>开关设备</span><p>理解故障隔离、负荷转供和停电影响范围。</p></div>
+                <div><span>配电箱 / 分支设施</span><p>理解线路从哪里分叉，计量箱挂接到哪个节点。</p></div>
                 <div><span>计量箱 / 表</span><p>理解客户在哪里计量，换表与采集如何进行。</p></div>
                 <div><span>互感器</span><p>理解大电流或高电压如何进入计量装置。</p></div>
                 <div><span>采集终端</span><p>理解表计数据怎样传回采集主站。</p></div>
