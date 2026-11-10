@@ -2,6 +2,8 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 require("../assets/roadmap.js");
+require("../assets/lesson-details.js");
+require("../assets/content.js");
 
 const roadmap = globalThis.GRID_ROADMAP;
 const lessons = roadmap.stages.flatMap((stage) => stage.lessons);
@@ -28,11 +30,11 @@ test("课程编号连续且每讲都有目标、知识点和来源", () => {
   });
 });
 
-test("当前三讲属于基础阶段且有对应详细课程", () => {
+test("全部 32 讲都对应详细课程", () => {
   const readyLessons = lessons.filter((lesson) => lesson.chapterId);
   assert.deepEqual(
     readyLessons.map((lesson) => lesson.chapterId),
-    ["1", "2", "3"],
+    Array.from({ length: 32 }, (_, index) => String(index + 1)),
   );
   assert.equal(roadmap.stages[0].lessons[0].chapterId, "1");
 });

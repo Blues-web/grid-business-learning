@@ -3,22 +3,24 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 
+require("../assets/roadmap.js");
+require("../assets/lesson-details.js");
 require("../assets/content.js");
 
 const course = globalThis.GRID_COURSE;
 
-test("课程包含完整的前三章", () => {
-  assert.equal(course.chapters.length, 3);
+test("课程包含完整的 32 讲", () => {
+  assert.equal(course.chapters.length, 32);
   assert.deepEqual(
     course.chapters.map((chapter) => chapter.id),
-    ["1", "2", "3"],
+    Array.from({ length: 32 }, (_, index) => String(index + 1)),
   );
 });
 
 test("每章都有目标、正文、总结、测验和下一节预告", () => {
   course.chapters.forEach((chapter) => {
     assert.ok(chapter.objectives.length >= 3);
-    assert.ok(chapter.sections.length >= 2);
+    assert.ok(chapter.sections.length >= 8);
     assert.ok(chapter.sections.some((section) => section.id === "summary"));
     assert.equal(chapter.quiz.length, 3);
     assert.ok(chapter.next.title);
@@ -51,13 +53,25 @@ test("课程正文不包含数据库和接口实现示例", () => {
   assert.equal(serialized.includes("<pre><code>"), false);
 });
 
+test("第 13 讲直接解释任务交底，并与安全交底区分", () => {
+  const chapter = course.chapters.find((item) => item.id === "13");
+  const serialized = JSON.stringify(chapter);
+
+  assert.match(serialized, /开工前/);
+  assert.match(serialized, /对象、边界、分工、标准、异常/);
+  assert.match(serialized, /任务交底回答/);
+  assert.match(serialized, /安全交底回答/);
+  assert.match(serialized, /范围变化/);
+});
+
 test("所有教学插图均存在于本地资源目录", () => {
   const serialized = JSON.stringify(course);
   const sources = [...serialized.matchAll(/src=\\?\"([^\"\\]+)\\+?/g)].map(
     (match) => match[1],
   );
 
-  assert.ok(sources.length >= 6);
+  assert.ok(sources.length >= 10);
+  assert.equal(sources.some((source) => source.endsWith(".svg")), false);
   sources.forEach((source) => {
     const relative = source.replace("./", "");
     assert.equal(

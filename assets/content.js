@@ -109,10 +109,25 @@
                   <p>调度关注电网整体的供需平衡、运行方式和故障处置；现场人员则负责执行设备巡视、操作、检修和应急处置。研发通常看不到调度过程，但它影响停电、复电和设备运行状态。</p>
                 </article>
               </div>
-              <figure class="lesson-figure">
-                <img src="./assets/images/power-business-map.svg" alt="从发电、输电、变电、配电到用电的一度电业务旅程，以及客户服务、计量采集和设备运检的支撑关系" />
-                <figcaption>图 1-1　一度电不只是物理流动，还会经过客户服务、计量采集和设备运检等业务协同。</figcaption>
-              </figure>
+              <div class="photo-process-grid">
+                <figure class="photo-process-card">
+                  <img src="./assets/images/real/transmission-lines.jpg" alt="高压变电站、输电杆塔和线路实拍" loading="lazy" />
+                  <figcaption><span>01 · 输电</span><strong>高电压、长距离输送电能</strong><a href="https://commons.wikimedia.org/wiki/File:Power_Transmission_Lines.jpg" target="_blank" rel="noreferrer">照片：Orlova-tpe / CC BY-SA 3.0</a></figcaption>
+                </figure>
+                <figure class="photo-process-card">
+                  <img src="./assets/images/real/distribution-transformer.jpg" alt="杆上配电变压器和低压线路实拍" loading="lazy" />
+                  <figcaption><span>02 · 配电</span><strong>配变降压后送到台区和客户</strong><a href="https://commons.wikimedia.org/wiki/File:Utility_pole_with_transformer_and_power_lines.jpg" target="_blank" rel="noreferrer">照片：Candeadly / CC BY 4.0</a></figcaption>
+                </figure>
+                <figure class="photo-process-card">
+                  <img src="./assets/images/real/smart-meter.jpg" alt="客户侧智能电能表实拍" loading="lazy" />
+                  <figcaption><span>03 · 用电</span><strong>客户使用电能，计量装置记录电量</strong><a href="https://commons.wikimedia.org/wiki/File:Smart_Electrical_Meter.jpg" target="_blank" rel="noreferrer">照片：Aliva Sahoo / CC BY-SA 4.0</a></figcaption>
+                </figure>
+              </div>
+              <div class="process-lanes photo-business-lanes">
+                <div><span>客户服务</span><p>客户申请接电、变更用电并获得服务。</p></div>
+                <div><span>计量采集</span><p>现场测量电能并把数据传回系统。</p></div>
+                <div><span>设备运检</span><p>维护线路和设备，处理故障和缺陷。</p></div>
+              </div>
               <div class="term-compare">
                 <div><strong>现场有什么</strong><span>设备、箱体、表计和接线</span></div>
                 <div><strong>现场怎样连接</strong><span>由哪条线路、哪台配变供电</span></div>
@@ -126,10 +141,13 @@
             title: "4. 业务对象及关系",
             html: `
               <p>下面是一条常见的低压居民供电路径，用于建立空间感。它不是所有用户都采用的唯一结构。</p>
-              <figure class="lesson-figure">
-                <img src="./assets/images/distribution-topology.svg" alt="变电站通过中压线路连接配电变压器，形成多个低压台区，再经低压线路和计量箱供到客户" />
-                <figcaption>图 1-2　配电网把上级电能逐级分配到台区，再通过低压线路、计量箱和计量装置送到客户。</figcaption>
-              </figure>
+              <div class="photo-topology-row">
+                <figure><img src="./assets/images/real/switchgear.jpg" alt="配电变电站开关设备区域实拍" loading="lazy" /><figcaption>变电站 / 开关设备</figcaption></figure>
+                <span aria-hidden="true">→</span>
+                <figure><img src="./assets/images/real/distribution-transformer.jpg" alt="杆上配电变压器实拍" loading="lazy" /><figcaption>配变 / 台区</figcaption></figure>
+                <span aria-hidden="true">→</span>
+                <figure><img src="./assets/images/real/meter-cabinet.jpg" alt="户外计量表箱实拍" loading="lazy" /><figcaption>计量箱 / 客户</figcaption></figure>
+              </div>
               <div class="relation-grid">
                 <div class="relation-card">
                   <span>箱组</span>
@@ -481,10 +499,16 @@
                   <p>设备铭牌上的电压、电流和容量是额定能力；采集页面的电压、电流和功率是某一时刻的测量值；电量是一段时间的累计结果。三者不能混着解释。</p>
                 </article>
               </div>
-              <figure class="lesson-figure lesson-figure-wide">
-                <img src="./assets/images/single-three-phase.svg" alt="单相220V由相线和中性线构成，常见于家庭；三相380V由三根相线和中性线构成，常用于电机及较大功率动力设备" />
-                <figcaption>图 2-1　快速对照：家庭常见单相 220V，工业动力常见三相 380V；三相系统中相线与中性线之间仍可能是 220V。</figcaption>
-              </figure>
+              <div class="phase-photo-comparison">
+                <figure>
+                  <img src="./assets/images/real/smart-meter.jpg" alt="居民场景中的智能电能表实拍" loading="lazy" />
+                  <figcaption><span>常见单相场景</span><strong>220V 居民电表</strong><p>普通家庭照明、插座和小功率家电常见单相供电。</p></figcaption>
+                </figure>
+                <figure>
+                  <img src="./assets/images/real/switchgear.jpg" alt="工业配电场景中的开关设备和变压器实拍" loading="lazy" />
+                  <figcaption><span>常见三相场景</span><strong>380V 动力配电设备</strong><p>电机、泵类和较大商业负荷常见三相供电。</p></figcaption>
+                </figure>
+              </div>
             `,
           },
           {
@@ -515,8 +539,8 @@
                 <p>交流场景还要考虑功率因数、三相线电压/相电压和负荷不平衡；需要依据实际测量与现场接线判断。</p>
               </div>
               <figure class="lesson-figure">
-                <img src="./assets/images/meter-nameplate.svg" alt="单相电能表教学示意铭牌，标注220V电压、5至60安电流、频率、准确度、脉冲常数和资产编号" />
-                <figcaption>图 2-2　这张示意铭牌标注 220V，因此对应常见单相表；现场还要同时核对表号、电流规格和接线条件。</figcaption>
+                <img src="./assets/images/real/meter-nameplate.jpg" alt="电能表实物铭牌和显示屏照片" loading="lazy" />
+                <figcaption>图 2-2　真实电能表铭牌示例。型号、电压、电流和常数会因厂家、用途而不同，现场必须核对表号和铭牌参数。</figcaption>
               </figure>
               <div class="field-reading-list">
                 <div><b>220V 常见于单相</b><span>家用电表多见一根相线和一根中性线，适用于普通家庭和小功率设备。</span></div>
@@ -549,8 +573,8 @@
                 <p>互感器把现场的大信号缩小后交给电表，业务上计算实际电量时，需要把这部分缩小比例还原，不能直接把表上看到的数字当成最终电量。</p>
               </div>
               <figure class="lesson-figure">
-                <img src="./assets/images/metering-box-cutaway.svg" alt="计量箱内部示意，包括进线、总开关、电流互感器、电能表、采集终端、接线与封印" />
-                <figcaption>图 2-3　计量箱内部是同一条计量证据链：进线、开关、互感器、表计、采集和封印共同决定数据是否可信。</figcaption>
+                <img src="./assets/images/real/meter-cabinet.jpg" alt="户外杆装计量表箱及多只电能表实拍" loading="lazy" />
+                <figcaption>图 2-3　户外计量表箱实拍。真实表箱可能包含进线、开关、表计、互感器、终端和封印，具体布置因设备和地区而异。</figcaption>
               </figure>
               <div class="exception-box">
                 <strong>变比错误的典型影响</strong>
@@ -706,7 +730,7 @@
         ],
         next: {
           number: "03",
-          title: "配电网、台区与现场设备",
+          title: "配电网、台区与设备基础",
           text: "下一章会把这些参数落到现场设备和供电关系上，解释为什么现场、档案和责任归属会出现不一致。",
         },
       },
@@ -879,10 +903,13 @@
             short: "拓扑",
             title: "5. 从配变到客户看懂供电拓扑",
             html: `
-              <figure class="lesson-figure lesson-figure-wide">
-                <img src="./assets/images/distribution-topology.svg" alt="变电站、中压配电线路、三台配电变压器、三个低压台区以及台区内计量箱和客户的拓扑示意" />
-                <figcaption>图 3-2　中压线路给配变供电，配变形成低压台区；台区内再通过低压线路、接入点、计量箱和表计供到客户。</figcaption>
-              </figure>
+              <div class="photo-topology-row">
+                <figure><img src="./assets/images/real/transmission-lines.jpg" alt="变电站和高压线路实拍" loading="lazy" /><figcaption>变电站 / 上级电源</figcaption></figure>
+                <span aria-hidden="true">→</span>
+                <figure><img src="./assets/images/real/distribution-transformer.jpg" alt="配电变压器和低压线路实拍" loading="lazy" /><figcaption>配电线路 / 配变</figcaption></figure>
+                <span aria-hidden="true">→</span>
+                <figure><img src="./assets/images/real/meter-cabinet.jpg" alt="计量箱和客户侧表计实拍" loading="lazy" /><figcaption>低压台区 / 计量箱</figcaption></figure>
+              </div>
               <div class="topology-reading">
                 <div><span>从哪来</span><strong>线路 → 配变</strong><p>判断停电和故障影响范围。</p></div>
                 <div><span>属于谁</span><strong>配变 → 台区</strong><p>判断用户归哪个台区管理。</p></div>
@@ -1047,10 +1074,259 @@
         ],
         next: {
           number: "04",
-          title: "配电网与台区",
-          text: "后续将深入台区划分、低压拓扑、线损归属和台区经理责任范围。当前版本先学习到这里。",
+          title: "客户、供电点与计量点",
+          text: "下一章会区分客户、地址、供电点、计量点和账户，建立客户业务关系的完整认识。",
         },
       },
     ],
   };
+
+  const course = root.GRID_COURSE;
+  const roadmap = root.GRID_ROADMAP;
+  const lessonDetails = root.GRID_LESSON_DETAILS || {};
+  const roadmapLessons = [];
+  roadmap.stages.forEach((stage) => {
+    stage.lessons.forEach((lesson) => {
+      lesson.stage = stage;
+      roadmapLessons.push(lesson);
+    });
+  });
+
+  const buildGeneratedChapter = (lesson, index) => {
+    const detail = lessonDetails[lesson.number];
+    const nextLesson = roadmapLessons[index + 1];
+    const learningObjectives =
+      detail.learningObjectives ||
+      lesson.keyPoints.map(
+        (point) => `掌握“${point}”的业务含义及判断方法。`,
+      );
+    const chapterObjectives = detail.chapterObjectives || [
+      lesson.goal,
+      `能说明“${lesson.keyPoints[0]}”在业务中的作用。`,
+      "能识别本讲常见异常，并知道下一步交给谁处理。",
+    ];
+    const otherLessons = roadmapLessons.filter((item) => item.number !== lesson.number);
+    const discourage = (offset) => otherLessons[(index + offset) % otherLessons.length];
+    const question1Wrong = [discourage(1), discourage(2), discourage(3)];
+    const question2Wrong = [
+      discourage(4).keyPoints[0],
+      discourage(5).keyPoints[1],
+      discourage(6).keyPoints[2],
+    ];
+    const processWrong = detail.process.slice(1, 4);
+    const conceptCards = detail.concepts
+      .map(
+        ([name, explanation, impact]) => `
+          <article>
+            <h3>${name}</h3>
+            <p><strong>通俗解释：</strong>${explanation}</p>
+            <p><strong>业务影响：</strong>${impact}</p>
+          </article>
+        `,
+      )
+      .join("");
+    const processNotes = detail.processNotes || [];
+    const stepItems = detail.process
+      .map(
+        (step, stepIndex) =>
+          `<li><b>${step}</b><span>${processNotes[stepIndex] || "按要求完成本环节并留下必要的业务结果。"}</span></li>`,
+      )
+      .join("");
+    const devQuestionNotes = detail.devQuestionNotes || [];
+    const questionCards = detail.devQuestions
+      .map(
+        (question, questionIndex) =>
+          `<article><span>${String(questionIndex + 1).padStart(2, "0")}</span><h3>${question}</h3><p>${devQuestionNotes[questionIndex] || "先从业务目的和对象关系出发，再进入页面与操作。"}</p></article>`,
+      )
+      .join("");
+    const pitfalls = detail.pitfalls.map((item) => `<li>${item}</li>`).join("");
+
+    return {
+      id: String(Number(lesson.number)),
+      number: lesson.number,
+      title: lesson.title,
+      subtitle: lesson.goal,
+      duration: "约 12 分钟",
+      tags: lesson.keyPoints,
+      objectives: chapterObjectives,
+      sections: [
+        {
+          id: "goals",
+          short: "目标",
+          title: "1. 本节学习目标",
+          html: `
+            <div class="objective-grid">
+              ${learningObjectives
+                .map(
+                  (objective, objectiveIndex) =>
+                    `<div class="objective-card"><span>${String(objectiveIndex + 1).padStart(2, "0")}</span><p>${objective}</p></div>`,
+                )
+                .join("")}
+            </div>
+            <div class="callout callout-green">
+              <strong>本讲在路线中的位置</strong>
+              <p>${lesson.stage.title} · 第 ${lesson.number} 讲。${lesson.stage.goal}</p>
+            </div>
+          `,
+        },
+        {
+          id: "background",
+          short: "背景",
+          title: "2. 业务背景",
+            html: detail.backgroundHtml || `<p>${detail.background}</p>`,
+        },
+        {
+          id: "concepts",
+          short: "概念",
+          title: "3. 核心概念",
+          html: `<div class="concept-list">${conceptCards}</div>`,
+        },
+        {
+          id: "objects",
+          short: "对象",
+          title: "4. 业务对象及关系",
+            html:
+              detail.objectsHtml ||
+              `
+            <p>本讲主要围绕 ${detail.concepts.map(([name]) => name).join("、")} 展开。对象之间不是简单的上下级关系，需要结合业务来源、现场位置和当前处理状态理解。</p>
+            <div class="plain-term-grid">
+              ${detail.concepts
+                .map(
+                  ([name, explanation]) =>
+                    `<div><b>${name}</b><span>${explanation}</span></div>`,
+                )
+                .join("")}
+            </div>
+          `,
+        },
+        {
+          id: "process",
+          short: "流程",
+          title: "5. 业务流程",
+          html: `<ol class="step-list">${stepItems}</ol>`,
+        },
+        {
+          id: "project-case",
+          short: "案例",
+          title: "6. 业务案例",
+            html:
+              detail.caseHtml ||
+              `
+            <div class="case-header">
+              <div><span>关联项目</span><strong>${lesson.source}</strong></div>
+              <div class="case-badge">业务场景</div>
+            </div>
+            <div class="scenario-card">
+              <p class="panel-label">案例</p>
+              <h3>${lesson.title}</h3>
+              <p>${detail.case}</p>
+            </div>
+          `,
+        },
+        {
+          id: "software",
+          short: "业务理解",
+          title: "7. 研发理解要点",
+          html: `
+            <p>阅读页面或需求时，先回答下面三个问题，再考虑具体功能。</p>
+            <div class="business-question-grid">${questionCards}</div>
+            <div class="exception-box">
+              <strong>常见误区</strong>
+              <ul>${pitfalls}</ul>
+            </div>
+          `,
+        },
+        {
+          id: "summary",
+          short: "总结",
+          title: "8. 本节总结",
+            html:
+              (detail.summary &&
+                `<div class="takeaway-list">${detail.summary
+                  .map(
+                    (item, summaryIndex) =>
+                      `<div><span>${summaryIndex + 1}</span><p>${item}</p></div>`,
+                  )
+                  .join("")}</div>`) ||
+              `
+            <div class="takeaway-list">
+              ${lesson.keyPoints
+                .map(
+                  (point, pointIndex) =>
+                    `<div><span>${pointIndex + 1}</span><p>${point}：理解其业务目的、关联对象和异常影响。</p></div>`,
+                )
+                .join("")}
+            </div>
+          `,
+        },
+      ],
+      quiz:
+        detail.quiz ||
+        [
+        {
+          id: `${lesson.number}-q1`,
+          question: "本讲主要希望研发理解什么？",
+          options: [lesson.goal, ...question1Wrong.map((item) => item.goal)],
+          correct: 0,
+          explanation: `本讲核心目标是：${lesson.goal}`,
+          optionNotes: [
+            "正确答案：与本讲定位一致。",
+            "该内容属于其他学习阶段。",
+            "该内容属于其他学习阶段。",
+            "该内容属于其他学习阶段。",
+          ],
+        },
+        {
+          id: `${lesson.number}-q2`,
+          question: "以下哪一项属于本讲的关键业务知识？",
+          options: [lesson.keyPoints[0], ...question2Wrong],
+          correct: 0,
+          explanation: `${lesson.keyPoints[0]} 是本讲需要理解的核心知识点。`,
+          optionNotes: [
+            "正确答案：与本讲关键知识一致。",
+            "该知识点属于其他课程。",
+            "该知识点属于其他课程。",
+            "该知识点属于其他课程。",
+          ],
+        },
+        {
+          id: `${lesson.number}-q3`,
+          question: "处理本讲业务时，较合理的第一步是什么？",
+          options: [detail.process[0], ...processWrong],
+          correct: 0,
+          explanation: `应先完成“${detail.process[0]}”，再根据业务结果进入后续环节。`,
+          optionNotes: [
+            "正确答案：符合本讲业务流程顺序。",
+            "该步骤应在确认前置条件之后进行。",
+            "该步骤应在确认前置条件之后进行。",
+            "该步骤应在确认前置条件之后进行。",
+          ],
+        },
+        ],
+      next: nextLesson
+        ? {
+            number: nextLesson.number,
+            title: nextLesson.title,
+            text: nextLesson.goal,
+          }
+        : {
+            number: "32",
+            title: "路线学习完成",
+            text: "你已经浏览完当前学习路线，可以回到前面的章节继续复习。",
+          },
+    };
+  };
+
+  roadmapLessons.forEach((lesson, index) => {
+    lesson.chapterId = String(Number(lesson.number));
+  });
+
+  roadmapLessons.forEach((lesson, index) => {
+    if (course.chapters.some((chapter) => Number(chapter.id) === Number(lesson.number))) {
+      return;
+    }
+    course.chapters.push(buildGeneratedChapter(lesson, index));
+  });
+
+  course.chapters.sort((left, right) => Number(left.id) - Number(right.id));
 })(typeof window !== "undefined" ? window : globalThis);

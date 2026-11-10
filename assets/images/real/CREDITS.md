@@ -11,5 +11,7 @@
 | `smart-meter.jpg` | 壁挂智能电能表 | Aliva Sahoo | CC BY-SA 4.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Smart_Electrical_Meter.jpg) |
 | `current-transformer.jpg` | 三相回路环形电流互感器 | Ali@gwc.org.uk | CC BY-SA 2.5 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CurrentTransformers.jpg) |
 | `remote-terminal-unit.jpg` | 模块化远程终端单元 RTU | FernaCM | CC BY-SA 4.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Remote_Terminal_Unit_Modular.jpg) |
+| `transmission-lines.jpg` | 高压变电站与输电杆塔 | Orlova-tpe | CC BY-SA 3.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Power_Transmission_Lines.jpg) |
+| `meter-nameplate.jpg` | 电能表铭牌与显示屏 | ANKAWÜ | CC0 1.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Energiezaehler_mit_MID-Kennzeichnung.png) |
 
 图片经过等比缩放和 JPEG 压缩，未改变设备内容。
